@@ -1,0 +1,192 @@
+% Generic System and Software Architecture Design Template
+% Developed by Darian Muresan, Ph.D.
+% In conjunction with the AI agents OpenAI Codex and Anthropic Claude Code.
+% dmuresan@stevens.edu
+% darian@dmmd.net
+% darian@pictomic.com
+% AI agents: read tgmAIAgentGuide.tex before editing this template.
+\documentclass[12pt]{cornell}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xspace}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,fit,positioning,shapes.geometric}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\keepXColumns
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{pdflscape}
+\usepackage{tcolorbox}
+\usepackage{makeidx}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage[acronym,toc]{glossaries}
+
+\makeindex
+\makeglossaries
+\input{tgmGlossary.tex}
+
+\definecolor{dsnBlue}{RGB}{31,78,121}
+\definecolor{dsnGreen}{RGB}{46,125,50}
+\definecolor{dsnRed}{RGB}{183,28,28}
+\definecolor{dsnGray}{RGB}{90,90,90}
+\definecolor{dsnLightBlue}{RGB}{232,240,247}
+
+% Replace the values below when starting a project.
+\newcommand{\FileNamespace}{tgm}
+\newcommand{\ProjectName}{toggle-manhattan}
+\newcommand{\DocumentVersion}{0.1}
+\newcommand{\DocumentStatus}{Ongoing}
+\newcommand{\DocumentOwner}{Stel Angelidis}
+\newcommand{\Organization}{Computer Club}
+\newcommand{\DocumentDate}{October 14, 2026}
+\newcommand{\VERSION}{Version \DocumentVersion}
+
+\hypersetup{
+  pdftitle={toggle-manhattan - System and Software Architecture Design},
+  pdfauthor={Stel Angelidis},
+  pdfcreator={Darian Muresan, Ph.D., with OpenAI Codex and Anthropic Claude Code},
+  pdfsubject={System and software architecture design for toggle-manhattan},
+  pdfkeywords={toggle-manhattan, curtain control, embedded systems, software architecture, requirements, traceability, verification, validation}
+}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\setlength{\LTpre}{6pt}
+\setlength{\LTpost}{6pt}
+
+% Stable IDs are authored explicitly so references survive chapter reordering.
+\newcommand{\ArtifactLabel}[2]{\phantomsection\label{#1:#2}}
+\newcommand{\ArtifactID}[2]{\texttt{#2}\ArtifactLabel{#1}{#2}\index{#1!#2}}
+\newcommand{\ArtifactRef}[2]{\hyperref[#1:#2]{\texttt{#2}}}
+
+\newcommand{\UserStoryID}[1]{\ArtifactID{UserStory}{#1}}
+\newcommand{\UserStoryRef}[1]{\ArtifactRef{UserStory}{#1}}
+\newcommand{\RequirementID}[1]{\ArtifactID{Requirement}{#1}}
+\newcommand{\RequirementRef}[1]{\ArtifactRef{Requirement}{#1}}
+\newcommand{\UseCaseID}[1]{\ArtifactID{UseCase}{#1}}
+\newcommand{\UseCaseRef}[1]{\ArtifactRef{UseCase}{#1}}
+\newcommand{\ArchitectureID}[1]{\ArtifactID{Architecture}{#1}}
+\newcommand{\ArchitectureRef}[1]{\ArtifactRef{Architecture}{#1}}
+\newcommand{\TestCaseID}[1]{\ArtifactID{TestCase}{#1}}
+\newcommand{\TestCaseRef}[1]{\ArtifactRef{TestCase}{#1}}
+\newcommand{\VerificationID}[1]{\ArtifactID{Verification}{#1}}
+\newcommand{\VerificationRef}[1]{\ArtifactRef{Verification}{#1}}
+\newcommand{\ValidationID}[1]{\ArtifactID{Validation}{#1}}
+\newcommand{\ValidationRef}[1]{\ArtifactRef{Validation}{#1}}
+
+\newcommand{\ChapterLabel}[1]{\label{Chapter:#1}}
+\newcommand{\ChapterRef}[1]{\hyperref[Chapter:#1]{Chapter~\ref*{Chapter:#1}}}
+\newcommand{\StatusPass}{\textbf{\footnotesize\textcolor{dsnGreen}{PASS}}}
+\newcommand{\StatusPending}{\textbf{\footnotesize\textcolor{dsnGray}{PENDING}}}
+\newcommand{\StatusFail}{\textbf{\footnotesize\textcolor{dsnRed}{FAIL}}}
+\newcommand{\ReqStatusOpen}{\textbf{\textcolor{dsnGray}{Open}}}
+\newcommand{\ReqStatusInProgress}{\textbf{\textcolor{dsnBlue}{In Progress}}}
+\newcommand{\ReqStatusDone}{\textbf{\textcolor{dsnGreen}{Done}}}
+\newcommand{\ReqStatusRetired}{\textbf{\textcolor{dsnGray}{Retired}}}
+\newcommand{\NoVersion}{\ensuremath{\varnothing}}
+
+\newtcolorbox{dsnNote}[1][]{
+  colback=dsnLightBlue,
+  colframe=dsnBlue,
+  boxrule=0.6pt,
+  arc=1mm,
+  title=#1
+}
+
+\lstset{
+  backgroundcolor=\color{white},
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  keywordstyle=\color{blue},
+  commentstyle=\color{dsnGreen},
+  numbers=left,
+  numbersep=6pt,
+  numberstyle=\tiny\color{dsnGray},
+  showstringspaces=false,
+  stringstyle=\color{dsnRed},
+  tabsize=2
+}
+
+\changenormalspacing{\singlespacing}
+
+% Selective draft build: uncomment and list include names without .tex.
+% Keep this block commented for complete verification and release builds.
+% \includeonly{
+%   prologue,
+%   tgmAIAgentGuide,
+%   tgmRequirements,
+%   tgmArchitectureOverview,
+%   tgmTests
+% }
+
+\begin{document}
+
+\pagenumbering{roman}
+\singlespacing
+\include{prologue}
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\lhead{\small Chapter \thechapter}
+\chead{\small\nouppercase{\leftmark}}
+\rhead{\small\thepage}
+\lfoot{\small\ProjectName}
+\cfoot{\small\copyright\ \Organization}
+\rfoot{\small\VERSION}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+\include{tgmIntroduction}
+\include{tgmDevelopmentPlan}
+\include{tgmSystemContext}
+\include{tgmUserStories}
+\include{tgmRequirements}
+\include{tgmUseCases}
+\include{tgmArchitectureOverview}
+\include{tgmUserInterfaceDesign}
+\include{tgmLogicalView}
+\include{tgmProcessView}
+\include{tgmDevelopmentView}
+\include{tgmPhysicalView}
+\include{tgmImplementation}
+\include{tgmTests}
+\include{tgmTraceability}
+\include{tgmVerification}
+\include{tgmValidation}
+\include{tgmRelease}
+
+\bibliographystyle{IEEEtran}
+\bibliography{tgmReferences}
+
+\appendix
+\include{tgmDocumentGuide}
+\include{tgmEmbeddedSystemsProfile}
+\include{tgmAIAgentGuide}
+\include{tgmAIPromptLog}
+\include{tgmTestEvidence}
+
+\glsaddall
+\printglossaries
+\cleardoublepage
+\phantomsection
+\ChapterLabel{Index}
+\addcontentsline{toc}{chapter}{Index}
+\markboth{Index}{Index}
+\printindex
+
+\end{document}

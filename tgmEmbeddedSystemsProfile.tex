@@ -1,0 +1,391 @@
+\chapter{Embedded Systems Tailoring Profile}
+\ChapterLabel{EmbeddedSystemsProfile}
+\index{domain tailoring profile!embedded systems}
+\index{embedded systems}
+\index{hardware--software co-design}
+
+\section{How to Use This Appendix}
+This appendix tailors the generic architecture template for systems in which
+software interacts directly with dedicated hardware, constrained computing
+resources, physical processes, or real-time events. It applies to bare-metal
+firmware, real-time operating system (RTOS) products, embedded Linux systems, programmable
+logic, hardware--software products, and other cyber-physical systems.
+
+The profile augments the core template; it does not create a second
+architecture specification. Project-specific requirements, interfaces,
+decisions, diagrams, tests, and evidence shall remain in their authoritative
+core chapters. When this profile applies, retain this appendix as the
+authoritative tailoring guide, record the applicability decision in
+\ChapterRef{DevelopmentPlan}, and use the additional concerns below when
+creating and reviewing the core content. Remove this appendix from an
+instantiated project only when an authorized human records that the profile is
+not applicable.
+
+\section{Applicability}
+\label{Section:EmbeddedProfileApplicability}
+Apply this profile when one or more of the following conditions is present:
+
+\begin{itemize}
+\item software executes on a dedicated processor, microcontroller, system on
+chip, field-programmable device, or purpose-built computing module;
+\item behavior depends on interrupts, deadlines, deterministic scheduling,
+physical signals, sensors, actuators, or control loops;
+\item CPU, memory, storage, bus bandwidth, energy, or thermal resources are
+materially constrained;
+\item the product requires hardware bring-up, boot firmware, board support,
+device drivers, manufacturing provisioning, calibration, or field firmware
+updates; or
+\item safety, reliability, environmental, physical-security, certification,
+or component-lifecycle concerns affect the architecture.
+\end{itemize}
+
+The applicability decision shall identify the embedded platform class, the
+reason the profile applies, the hardware revisions in scope, and any other
+domain profiles used concurrently. A project may combine this profile with a
+future safety-critical, high-security, cloud, mobile, or machine-learning
+profile. Each profile remains guidance; controlled project facts stay in the
+core chapters.
+
+\section{Core-Chapter Tailoring Map}
+Use Table~\ref{Table:EmbeddedTailoringMap} to place each embedded concern in
+one authoritative location.
+
+\small
+\begin{tabularx}{\linewidth}{L{4.2cm}Y}
+\caption{Embedded-Systems Core-Chapter Tailoring Map\label{Table:EmbeddedTailoringMap}}\\
+\toprule
+\textbf{Core Chapter} & \textbf{Embedded-System Additions}\\
+\midrule
+\endfirsthead
+\multicolumn{2}{l}{\small\itshape Embedded-Systems Core-Chapter Tailoring Map (continued)}\\
+\toprule
+\textbf{Core Chapter} & \textbf{Embedded-System Additions}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Development Plan & Record the profile decision, hardware and firmware roles,
+toolchain ownership, hardware availability, prototypes, certification gates,
+manufacturing dependencies, and component-lifecycle risks.\\
+System Context & Define the hardware--software boundary, physical environment,
+sensors, actuators, operators, service tools, external buses, power sources,
+and upstream or downstream systems.\\
+User Stories and Use Cases & Include installation, startup, shutdown,
+calibration, diagnostics, maintenance, update, recovery, degraded operation,
+manufacturing, and service interactions where applicable.\\
+Requirements & Add timing, resource, power, interface, boot, recovery, safety,
+security, reliability, environmental, diagnostics, update, manufacturing, and
+regulatory obligations.\\
+Architecture Views & Document hardware--software allocation, firmware layers,
+execution contexts, states, timing, memory, deployment, data and signal flow,
+power modes, faults, and recovery.\\
+Implementation & Identify processor and board revisions, boot chain, BSP, HAL,
+RTOS or operating system, compiler, linker, SDK, libraries, generated code,
+linker scripts, build variants, image formats, and programming tools.\\
+Tests, Verification, and Validation & Add target execution, static analysis,
+timing analysis, SIL, PIL, HIL, fault injection, power, environmental,
+hardware-revision, update, recovery, and retained-evidence activities.\\
+Release & Identify released hardware revisions, firmware images, hashes,
+configuration data, programming instructions, compatibility, rollback,
+manufacturing release, service provisions, and known limitations.\\
+\end{tabularx}
+\normalsize
+
+\section{Hardware--Software Boundary and Allocation}
+The System Context and architecture chapters shall identify every processor,
+memory device, programmable component, peripheral, sensor, actuator, bus,
+power domain, and external physical interface that materially constrains the
+software. Define which behavior is implemented in hardware, firmware,
+programmable logic, operating-system services, application software, or an
+external system. Record alternatives and trade-offs for significant
+allocation decisions.
+
+For each allocated function, identify its driving requirements, execution
+platform, inputs, outputs, timing needs, failure behavior, update boundary,
+and verification method. Do not treat a vendor module, BSP, HAL, RTOS, device
+driver, or generated component as an unexamined implementation detail when it
+affects required behavior.
+
+\section{Embedded Requirement Categories}
+Table~\ref{Table:EmbeddedRequirementCategories} is a checklist of common
+embedded requirement categories. It does not introduce new requirement ID
+families. Classify each requirement in the existing family that best describes
+its primary obligation. Propose a new family only through the controlled
+procedure in \ChapterRef{Requirements}. Apply the domain-profile translation
+rule in Section~\ref{Section:DomainProfileRequirements}: every applicable
+embedded concern shall map to a project requirement, an existing requirement,
+or an approved Not Applicable decision with rationale.
+
+\small
+\begin{tabularx}{\linewidth}{L{3.7cm}Y}
+\caption{Embedded-System Requirement Categories\label{Table:EmbeddedRequirementCategories}}\\
+\toprule
+\textbf{Category} & \textbf{Questions the Requirements Shall Resolve}\\
+\midrule
+\endfirsthead
+\multicolumn{2}{l}{\small\itshape Embedded-System Requirement Categories (continued)}\\
+\toprule
+\textbf{Category} & \textbf{Questions the Requirements Shall Resolve}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Functional behavior & What observable control, sensing, computation,
+communication, diagnostic, maintenance, and recovery behavior is required?\\
+Timing and real time & What deadlines, periods, latency, jitter, sequencing,
+startup, shutdown, and worst-case response limits apply?\\
+Processing resources & What CPU utilization, execution-time, core-affinity,
+interrupt-latency, and scheduling limits apply?\\
+Memory and storage & What flash, RAM, stack, heap, nonvolatile storage,
+retention, endurance, and memory-protection limits apply?\\
+Power and thermal & What operating, sleep, peak, average, battery-life,
+wake-up, brownout, thermal, and power-transition behavior is required?\\
+Hardware interfaces & What electrical levels, pin assignments, connectors,
+buses, protocols, rates, units, ranges, scaling, resolution, endianness, and
+error behavior apply?\\
+Boot and initialization & What boot sources, ordering, self-tests, startup
+times, configuration checks, and failure responses are required?\\
+Reset and recovery & What events cause reset, retry, failover, degraded mode,
+safe state, rollback, or operator intervention?\\
+Safety & What hazards, safety functions, safe states, diagnostic coverage,
+independence, and integrity constraints apply?\\
+Security & What root of trust, secure boot, image authentication, device
+identity, key provisioning, access control, debug-port, anti-rollback, and
+physical-attack provisions apply?\\
+Reliability and availability & What service life, duty cycle, fault tolerance,
+watchdog, data-integrity, availability, maintainability, and recovery targets
+apply?\\
+Environmental & What temperature, humidity, vibration, shock, altitude,
+electromagnetic, contamination, ingress, and storage conditions apply?\\
+Diagnostics and observability & What logs, counters, health indicators, fault
+codes, traces, test points, telemetry, and service interfaces are required?\\
+Calibration and configuration & What values are configurable or calibrated;
+who controls them; how are range, integrity, compatibility, and provenance
+maintained?\\
+Firmware update & What transport, authentication, atomicity, compatibility,
+interruption, rollback, recovery, audit, and field-service behavior applies?\\
+Manufacturing and provisioning & What programming, serialization, key
+injection, calibration, end-of-line testing, traceability, and acceptance data
+is required?\\
+Regulatory and certification & What standards, evidence, configuration
+controls, independence, analysis, and approval obligations apply?\\
+Component lifecycle & What approved components, alternates, lead-time,
+obsolescence, silicon errata, vendor support, and redesign constraints apply?\\
+\end{tabularx}
+\normalsize
+
+Each embedded requirement shall retain the normal priority, lifecycle status,
+In Version value, use-case mapping, and test-case mapping. Quantitative limits
+shall state units, applicable operating conditions, tolerance, and verification
+method. Avoid terms such as ``fast,'' ``low power,'' or ``robust'' without a
+measurable acceptance boundary.
+
+\section{Required Architecture Views}
+Select views according to risk and complexity, and explain any omitted view
+that would normally apply. Create diagrams with TikZ and store them under the
+owning core chapter.
+
+\small
+\begin{tabularx}{\linewidth}{L{4.0cm}Y}
+\caption{Candidate Embedded-System Architecture Views\label{Table:EmbeddedArchitectureViews}}\\
+\toprule
+\textbf{View} & \textbf{Content}\\
+\midrule
+\endfirsthead
+\multicolumn{2}{l}{\small\itshape Candidate Embedded-System Architecture Views (continued)}\\
+\toprule
+\textbf{View} & \textbf{Content}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Hardware block view & Processing, memory, programmable logic, peripherals,
+clock, reset, power, sensors, actuators, and external connections.\\
+Hardware--software allocation & Required functions allocated to hardware,
+firmware layers, programmable logic, or external systems.\\
+Firmware layering & Bootloader, BSP, HAL, drivers, RTOS or kernel, middleware,
+services, application, and diagnostic boundaries.\\
+Boot and update sequence & Trust chain, initialization order, self-tests,
+configuration loading, update, rollback, and recovery paths.\\
+Execution-context view & Cores, processes, tasks, threads, interrupt service
+routines, priorities, scheduling, synchronization, and shared resources.\\
+State and mode view & Operational, maintenance, calibration, degraded, safe,
+sleep, update, and fault states with permitted transitions.\\
+Timing view & Periods, deadlines, latency, jitter, sequencing, bus transactions,
+control-loop timing, and worst-case paths.\\
+Memory view & Address spaces, partitions, executable regions, stacks, heaps,
+DMA buffers, retained data, memory protection, and nonvolatile layout.\\
+Data and signal flow & Units, scaling, sample rates, filtering, validity,
+ownership, persistence, and error propagation.\\
+Deployment view & Firmware images and configuration deployed to processors,
+cores, boards, hardware revisions, and manufacturing or field tools.\\
+Power and thermal view & Power domains, modes, transitions, wake sources,
+consumers, thermal limits, throttling, and shutdown behavior.\\
+Fault-containment view & Fault-detection boundaries, watchdogs, redundancy,
+degraded operation, safe states, containment, and recovery.\\
+\end{tabularx}
+\normalsize
+
+\section{Interfaces and Protocols}
+For every hardware or communication interface, document the physical and
+logical contract together. Include connector and pin identity, direction,
+electrical characteristics, protocol and version, topology, addressing,
+message or register definition, data type, units, range, resolution, scaling,
+endianness, update rate, timing, initialization, ownership, concurrency,
+timeouts, integrity checks, invalid values, error handling, compatibility, and
+verification method where applicable.
+
+An interface table or referenced interface-control document shall have a
+controlled identifier and version. Each interface requirement and test shall
+link to that authority. Do not infer an electrical limit, register behavior,
+reserved bit, or protocol tolerance without controlled evidence.
+
+\section{Resource Budgets}
+Maintain resource budgets whenever architecture feasibility depends on a
+finite embedded resource. Table~\ref{Table:EmbeddedResourceBudget} is a generic
+pattern; create one row for each controlled allocation and reconcile component
+allocations with the system total.
+
+\small
+\begin{tabularx}{\linewidth}{L{2.2cm}L{2.5cm}L{2.2cm}L{2.3cm}Y}
+\caption{Generic Embedded Resource Budget\label{Table:EmbeddedResourceBudget}}\\
+\toprule
+\textbf{Resource} & \textbf{Owner} & \textbf{Allocation} & \textbf{Measured or Estimated} & \textbf{Requirement / Evidence}\\
+\midrule
+\endfirsthead
+\multicolumn{5}{l}{\small\itshape Generic Embedded Resource Budget (continued)}\\
+\toprule
+\textbf{Resource} & \textbf{Owner} & \textbf{Allocation} & \textbf{Measured or Estimated} & \textbf{Requirement / Evidence}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+CPU time & [task or component] & [limit and units] & [value, method, conditions] & [requirement and test IDs]\\
+Flash & [image or component] & [bytes or percent] & [map-file value] & [requirement and evidence]\\
+RAM & [task or component] & [bytes or percent] & [static and peak value] & [requirement and evidence]\\
+Stack & [task or context] & [bytes] & [worst observed or analyzed] & [requirement and evidence]\\
+Bus bandwidth & [interface or flow] & [rate and utilization] & [value and conditions] & [requirement and test IDs]\\
+Power or energy & [mode or component] & [power, current, or energy] & [value and conditions] & [requirement and test IDs]\\
+Thermal margin & [component or mode] & [temperature or margin] & [value and conditions] & [requirement and evidence]\\
+\end{tabularx}
+\normalsize
+
+Every budget shall state the measurement or estimation conditions, margin
+policy, uncertainty, owner, update trigger, and response to an exceeded
+allocation. Budget evidence shall distinguish analysis, simulation,
+measurement, and worst-case guarantee.
+
+\section{Safety, Reliability, and Fault Management}
+Identify hazards, failure modes, fault sources, detection mechanisms,
+containment boundaries, watchdogs, redundancy, degraded modes, safe states,
+recovery behavior, diagnostic coverage, and residual risk where applicable.
+Trace every credited mechanism to requirements and verification evidence.
+
+Do not claim a safety integrity level, diagnostic coverage, failure rate,
+independence, or risk acceptance without the applicable analysis and
+authorized approval. When a dedicated safety profile or regulated process
+applies, use it together with this embedded profile and record precedence for
+any conflicting rule.
+
+\section{Embedded Security}
+Define the trust boundary and lifecycle from manufacturing through
+decommissioning. Address device identity, root of trust, secure boot, image
+authentication, signing and key custody, provisioning, credential storage,
+debug and test access, privileged interfaces, update authorization,
+anti-rollback, protected configuration, security logging, recovery, physical
+attack assumptions, vulnerability response, and secure decommissioning as
+applicable.
+
+Security controls shall be mapped to threats, requirements, tests, retained
+evidence, and operational responsibilities. Secrets and production keys shall
+not be placed in this architecture document, source repository, AI prompt, or
+test artifact.
+
+\section{Toolchain and Configuration Control}
+Record the controlled hardware revisions, processor variants, compiler and
+linker versions, optimization and warning settings, linker scripts, BSP, HAL,
+RTOS or operating-system version, SDK, libraries, code generators, programming
+tools, static-analysis tools, build variants, configuration sources, and image
+formats. Identify which outputs are generated, how they are reproduced, and
+which tool qualifications or validations apply.
+
+A released firmware image shall be traceable to source revision, configuration,
+toolchain, dependencies, hardware compatibility, build procedure, image hash,
+and approval evidence. Changes to silicon revision, board revision, compiler,
+optimization, RTOS, BSP, HAL, linker script, or generated-code input shall
+trigger an impact assessment.
+
+\section{Embedded Verification and Validation}
+Select test environments according to the requirement and the confidence
+needed. The verification plan may include review, static analysis, host unit
+tests, software-in-the-loop (SIL), processor-in-the-loop (PIL), target tests,
+hardware-in-the-loop (HIL), fault injection, timing and worst-case execution
+analysis, stress, endurance, power, thermal, environmental, electromagnetic,
+hardware-revision compatibility, boot, update, rollback, and recovery testing.
+
+Each result shall identify the hardware revision, firmware version, build
+configuration, tool and fixture versions, calibration state, environmental
+conditions, input data, procedure, expected result, actual result, retained
+evidence, and reviewer. Simulation or host-test evidence shall not be
+represented as target evidence. Validation shall use representative intended
+operation and stakeholders or authorized representatives.
+
+\section{AI Tailoring Instructions}
+\index{AI agent!embedded systems tailoring}
+When this profile is Applicable or TBD, an AI agent shall read this appendix
+with the task-specific core chapters. Before editing, it shall ask for or
+confirm:
+
+\begin{itemize}
+\item the platform class: bare metal, RTOS, embedded Linux, programmable logic,
+or mixed;
+\item processor, board, programmable-device, and hardware revisions in scope;
+\item boot chain, operating system or RTOS, BSP, HAL, SDK, compiler, linker,
+and relevant third-party components;
+\item external interfaces, sensors, actuators, physical environment, timing,
+resource, power, safety, security, regulatory, manufacturing, update, and
+service constraints; and
+\item available schematics, datasheets, interface-control documents, hazard
+analysis, threat analysis, test evidence, and authorized approvals.
+\end{itemize}
+
+The agent shall add embedded concerns to the initialization gap list and place
+project facts only in their authoritative core chapters. It shall not invent
+pinouts, register behavior, electrical limits, memory sizes, execution times,
+power measurements, hardware compatibility, safety classifications, security
+claims, certification evidence, or test results. It shall report missing
+controlled hardware evidence and every decision requiring authorized human
+approval.
+
+Use the following request for an embedded project:
+
+\begin{verbatim}
+Read tgmAIAgentGuide.tex and tgmEmbeddedSystemsProfile.tex. Apply the
+Embedded Systems Tailoring Profile to [Project Name]. Ask me to
+confirm the project namespace, profile applicability, platform class,
+hardware revisions, toolchain, interfaces, constraints, applicable
+standards, and available evidence. Add embedded concerns to the gap
+list before editing. After human review, place project-specific
+requirements, architecture, diagrams, tests, and evidence only in
+their authoritative core chapters. Do not invent hardware facts or
+verification results. Build the complete document, inspect the log,
+and visually inspect the affected PDF pages.
+\end{verbatim}
+
+\section{Embedded-Profile Completion Checklist}
+Before completing embedded tailoring, confirm that:
+
+\begin{itemize}
+\item profile applicability and rationale are recorded;
+\item the hardware--software boundary and function allocation are explicit;
+\item timing, resources, power, interfaces, boot, recovery, safety, security,
+environmental, update, manufacturing, and lifecycle concerns were assessed;
+\item required embedded views and resource budgets exist or have documented
+omission rationales;
+\item hardware revisions, firmware versions, toolchain, build variants, and
+released images are configuration controlled;
+\item requirements, use cases, tests, traceability, verification, validation,
+and release records have reciprocal links; and
+\item the build succeeds and affected tables, diagrams, links, and page breaks
+have been visually inspected.
+\end{itemize}

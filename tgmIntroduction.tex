@@ -1,0 +1,203 @@
+\chapter{Introduction}
+\ChapterLabel{Introduction}
+\index{introduction}
+\index{Chapter!Introduction}
+\index{normative language}
+\index{priority}
+\index{source of truth}
+\index{V-model}
+
+\section{How to Use This Chapter}
+State the document purpose, scope, audience, conventions, and relationship to
+other project artifacts. Replace bracketed text with project-specific content.
+Keep binding obligations in the Requirements chapter.
+
+\section{Purpose}
+This document is the authoritative engineering specification for
+\ProjectName. It records why the system is needed, what it shall do, how it is
+structured, how it will be tested, and what evidence is required before
+release. It is readable by people and structured for use by engineering and
+\gls{ai}-assisted development tools.
+
+\begin{dsnNote}[Central lesson]
+A vague request produces unpredictable software. A precise, traceable
+specification allows engineers to generate, review, test, and, when necessary,
+regenerate a conforming implementation.
+\end{dsnNote}
+
+\section{Scope}
+Define the system boundary, included capabilities, exclusions, operating
+environment, major constraints, and the release covered by this document.
+
+\ProjectName\ is a system that controls the opening and closing of a
+curtain. The current decision is that a user commands the curtain through
+both a physical controller and a phone application. Stakeholders are identified in
+\hyperref[Section:Stakeholders]{the System Context}. Included capabilities,
+exclusions, target environment, external dependencies, and the release covered by this document
+are TBD and require supporting project evidence. Open context items are
+listed in \ChapterRef{SystemContext}.
+
+\section{Audience}
+Identify the people who create, approve, implement, test, operate, maintain,
+audit, or use the system. State which sections are most relevant to each role.
+
+\textit{Generic example: The primary audiences are customer representatives,
+systems engineers, architects, developers, testers, operators, maintainers,
+security reviewers, and project approvers. One person may perform several
+roles on a small project.}
+
+\section{Normative Language and Priority}
+Use \textbf{shall} for every binding requirement. Do not use \textbf{should} as
+guidance in normative statements. Assign each requirement one priority:
+\textbf{\gls{must}}, \textbf{\gls{should}}, \textbf{\gls{could}}, or
+\textbf{\gls{would}}. Priority expresses delivery importance; it does not change
+whether a statement containing \textbf{shall} is binding for its assigned
+implementation version.
+
+\section{Document as Source of Truth}
+Requirements alone do not define a reproducible implementation. The complete
+source of truth consists of stakeholder needs, user stories, requirements, use
+cases, architecture and interface decisions, implementation constraints,
+tests, verification evidence, validation evidence, and release criteria.
+Generated code is an implementation artifact governed by this specification.
+
+\section{Initializing a New Project from This Template}
+\label{Section:InitializeNewProject}
+\index{template!project initialization}
+\index{AI agent!project initialization}
+Create a project-specific architecture book from a copy of this template; do
+not place project-specific content in the master template. Before creating or
+renaming project-owned files, confirm the project name, system boundary,
+repository location, document owner, and project file namespace. Preserve
+tool-mandated discovery filenames, such as \texttt{AGENTS.md}, when an AI tool
+requires them.
+
+Gather the approved project evidence and identify missing scope, stakeholders,
+interfaces, constraints, quality attributes, risks, verification evidence,
+validation evidence, and approvals before replacing placeholders. Replace only
+content supported by that evidence. Update the document metadata, title
+material, contact information, and document history; then develop stakeholder
+needs, user stories, requirements, use cases, architecture, tests,
+traceability, verification, validation, and release content in dependency
+order. Preserve stable identifiers and reciprocal mappings throughout the
+document.
+
+Human authors and AI agents shall follow the detailed Initialize a Project
+workflow, repository-bootstrap procedure, naming rules, and completion
+checklist in \ChapterRef{AIAgentGuide}. After initialization, compile the
+complete document, review the build log, and visually inspect the generated
+PDF. The master template remains the reusable reference for later projects.
+
+To initialize a project with an AI agent, replace the bracketed project name
+and give the agent the following request:
+
+\begin{verbatim}
+Read Section 1.7, "Initializing a New Project from This Template,"
+and the authoritative AI Agent Usage Guide in tgmAIAgentGuide.tex.
+Initialize this copy of the architecture template for [Project Name].
+Before editing, ask me to confirm the project file namespace, which
+AI tools this repository will use, and which domain tailoring profiles
+apply. Review the repository and supplied project evidence, then
+produce a gap list of missing scope,
+stakeholders, interfaces, constraints, quality attributes, risks,
+evidence, and approvals. Do not invent project facts or replace
+unsupported placeholders. After I review the gap list, follow the
+documented initialization workflow and dependency order. Create only
+the applicable AI bootstrap files. Create SKILL.md only if I confirm
+that the repository is intended to provide a reusable AI skill. Update
+document history, compile the complete document, inspect the build
+log, and visually inspect the resulting PDF. Report unresolved
+decisions that require human approval.
+\end{verbatim}
+
+\section{Template Tailoring and Domain Profiles}
+\label{Section:DomainProfiles}
+\index{domain tailoring profile}
+\index{template!tailoring}
+The core chapters form a generic software-architecture template. A domain
+tailoring profile augments those chapters with concerns, artifacts, diagrams,
+and review criteria for a particular class of system. It does not replace a
+core chapter or create a second authoritative location for project facts.
+Requirements, interfaces, architecture decisions, tests, and evidence remain
+in their normal core chapters and link to one another through their stable IDs.
+
+Select applicable profiles during project initialization. More than one
+profile may apply. Record each applicability decision and rationale in
+\ChapterRef{DevelopmentPlan}, retain applicable profile appendices as
+authoritative tailoring guidance, and exclude an inapplicable profile from an
+instantiated project only after recording the decision. If profile guidance
+conflicts, identify the conflict and obtain an authorized human decision before
+editing controlled project content.
+
+\small
+\begin{tabularx}{\linewidth}{L{4.0cm}L{3.8cm}Y}
+\caption{Domain Profile Applicability\label{Table:DomainProfileApplicability}}\\
+\toprule
+\textbf{Profile} & \textbf{Applicability} & \textbf{Decision and Rationale}\\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\small\itshape Domain Profile Applicability (continued)}\\
+\toprule
+\textbf{Profile} & \textbf{Applicability} & \textbf{Decision and Rationale}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\hyperref[Chapter:EmbeddedSystemsProfile]{Embedded Systems} &
+Applicable &
+The system controls the physical movement of a curtain. Decision record:
+\hyperref[Table:ProjectDomainProfiles]{project profile decisions}.\\
+\textit{[Additional profile]} &
+\textit{[Applicable / Not Applicable / TBD]} &
+\textit{[Reason and relationship to other profiles]}\\
+\end{tabularx}
+\normalsize
+
+When the Embedded Systems profile is Applicable or TBD, read
+\ChapterRef{EmbeddedSystemsProfile} during initialization and for every task
+affected by hardware, firmware, real-time behavior, constrained resources,
+physical interfaces, safety, security, manufacturing, or field service.
+
+\section{Using This Template with AI Agents}
+\index{AI agent!architecture workflow}
+AI agents such as OpenAI Codex and Anthropic Claude Code can use the LaTeX
+sources as structured project context. The agent shall begin with
+\ChapterRef{AIAgentGuide}, select the applicable task-routing entry, and read
+only the authoritative files identified for that task. It shall expand the
+context only when a referenced dependency or unresolved inconsistency requires
+it. This keeps routine work focused without weakening traceability.
+
+The AI Agent Usage Guide contains the task-routing table, context packs,
+mandatory rules, standard workflows, completion checklists, human-review
+boundaries, and reusable prompts. Record material AI-assisted decisions in
+\ChapterRef{AIPromptLog}.
+
+The following minimal request starts an AI-assisted task:
+
+\begin{verbatim}
+Read tgmAIAgentGuide.tex first. Identify the applicable task and
+load only the files listed for it. Follow the template's stable-ID,
+priority, status, traceability, history, build, and review rules.
+Use only supplied project evidence. Report missing information and
+decisions that require human approval. Complete the requested task,
+compile the document, and visually inspect the affected PDF pages.
+\end{verbatim}
+
+\section{V-Model Organization}
+Figure~\ref{Figure:VModel} summarizes the \gls{vmodel} organization used by
+this template. The left side moves from stakeholder needs toward detailed
+design. The bottom represents implementation. The right side integrates the
+system and gathers evidence, pairing acceptance with stakeholder needs, system
+verification with requirements, integration tests with architecture, and unit
+tests with detailed design.
+
+This organization is compatible with the system and software life-cycle
+process frameworks in \cite{ISO15288,ISO12207}; those standards do not require
+a particular life-cycle model.
+
+\begin{figure}[htbp]
+\centering
+\input{TikZ/tgmIntroduction/tgmVModel.tex}
+\caption{V-model relationships used by this specification.}
+\label{Figure:VModel}
+\end{figure}

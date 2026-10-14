@@ -1,0 +1,45 @@
+\begin{tikzpicture}[
+  actor/.style={
+    draw=dsnGray,
+    fill=dsnGray!8,
+    rounded corners=2pt,
+    minimum width=2.6cm,
+    minimum height=0.8cm,
+    align=center,
+    font=\small
+  },
+  use case/.style={
+    ellipse,
+    draw=dsnBlue,
+    fill=dsnLightBlue,
+    minimum width=3.8cm,
+    minimum height=1.55cm,
+    inner sep=1pt,
+    align=center,
+    font=\small
+  },
+  association/.style={
+    draw=dsnGray,
+    line width=0.7pt
+  },
+  system boundary/.style={
+    draw=dsnBlue,
+    rounded corners=4pt,
+    inner sep=0.45cm
+  }
+]
+  \node[use case] (submit) at (0,0) {\UseCaseRef{UC-001}\\Submit a Service\\Request};
+  \node[use case] (status) at (4.25,0) {\UseCaseRef{UC-002}\\View Request\\Status};
+  \node[use case] (export) at (8.5,0) {\UseCaseRef{UC-003}\\Export Request\\History};
+
+  \node[system boundary, fit=(submit)(status)(export),
+    label={[font=\small\bfseries, text=dsnBlue]above:\ProjectName\ System}]
+    (system) {};
+
+  \node[actor, above=1.35cm of submit] (customer) {Customer};
+  \node[actor, above=1.35cm of export] (analyst) {Operations Analyst};
+
+  \draw[association] (customer) -- (submit);
+  \draw[association] (customer) -- (status);
+  \draw[association] (analyst) -- (export);
+\end{tikzpicture}

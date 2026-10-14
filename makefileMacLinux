@@ -1,0 +1,15 @@
+MAIN := tgmManual
+
+.PHONY: pdf clean
+
+pdf:
+	pdflatex -interaction=nonstopmode -halt-on-error $(MAIN).tex
+	bibtex $(MAIN)
+	makeglossaries $(MAIN)
+	makeindex $(MAIN).idx
+	pdflatex -interaction=nonstopmode -halt-on-error $(MAIN).tex
+	pdflatex -interaction=nonstopmode -halt-on-error $(MAIN).tex
+
+clean:
+	latexmk -c $(MAIN).tex
+	rm -f $(MAIN).acn $(MAIN).acr $(MAIN).alg $(MAIN).bbl $(MAIN).blg $(MAIN).glg $(MAIN).glo $(MAIN).gls $(MAIN).ist $(MAIN).xdy

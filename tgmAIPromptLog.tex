@@ -1,0 +1,42 @@
+\chapter{AI Prompt Log}
+\ChapterLabel{AIPromptLog}
+\section{How to Use This Appendix}
+Use this log when AI assistance materially affects requirements, architecture, code, tests, or release evidence. Record enough context for a reviewer to understand the input, output, assumptions, and human corrections.
+\section{Example Record}
+Date: \textit{[timestamp]}; Tool and model: \textit{[name]}; Input: \textit{[requirements and constraints supplied]}; Task: \textit{[requested output]}; Human review and corrections: \textit{[summary]}; Unresolved assumptions: \textit{[list or none]}.
+
+\section{Requirement Scope or Family Extension Record}
+When an AI-assisted change proposes a requirement scope or family that is not
+already defined, record the proposed uppercase code, full name, decision
+boundary, rationale, representative examples, semantic-overlap review,
+identifier-collision check, affected register and category-catalog changes, and
+the authorized human's approval or rejection. Do not assign an identifier from
+the proposed scope or family before approval.
+
+\section{Project Initialization Record}
+\label{Section:PromptLogInitialization}
+Date: October 14, 2026; Tool and model: Anthropic Claude Code (Claude Opus
+5.5); Input: the template initialization request in
+Section~\ref{Section:InitializeNewProject}, the project name
+\ProjectName, file namespace \texttt{tgm}, AI tool selection (Claude Code
+only; no reusable skill), Embedded Systems profile marked Applicable, document
+metadata, and the statement that the system controls the opening and closing
+of a curtain through an undecided method (physical controller or phone
+application); Task: produce an initialization gap list, then initialize the
+project copy, create applicable AI bootstrap files, and build and inspect the
+document; Human review and corrections: the requester confirmed the namespace,
+AI tools, profile applicability, and metadata, and stated that no further
+project evidence exists; Unresolved assumptions: none adopted. Open decisions
+are listed in \hyperref[Section:OpenContextItems]{the open context items}; the
+authorized approver and the embedded-profile decision owner were initially
+TBD. Follow-up decisions on October 14, 2026: Stel Angelidis is the authorized
+approver and approved the Embedded Systems profile decision; the control
+method is both a physical controller and a phone application; the embedded
+platform class remains TBD; Claude Code history entries use the initials
+CLAUDE; the stakeholders are people who want a low-cost, non-privacy-invading
+IoT curtain closer; privacy means no data collection about individual people
+and no cameras or microphones; components cost no more than USD 20 (cost basis
+TBD); the system runs on a microcontroller, with all other platform details
+TBD. The
+template's example requirements, use cases, tests, and registers remain
+unchanged as generic examples and are not project content.

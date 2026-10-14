@@ -1,0 +1,35 @@
+\chapter{User Stories}
+\ChapterLabel{UserStories}
+\index{user story}
+\index{acceptance criterion}
+\section{How to Use This Chapter}
+Capture stakeholder goals in accessible language. Stories express value and
+acceptance intent; precise obligations belong in Requirements. Give each story
+a stable ID, a priority, and links to one or more requirements that implement it.
+
+\section{User Story Register}
+\begin{tabularx}{\linewidth}{L{1.9cm}YL{1.8cm}L{3.4cm}}
+\caption{User Story Register\label{Table:UserStories}}\\
+\toprule
+\textbf{ID} & \textbf{Story and Acceptance Criteria} & \textbf{Priority} & \textbf{Requirement(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{4}{l}{\small\itshape User Story Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Story and Acceptance Criteria} & \textbf{Priority} & \textbf{Requirement(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\UserStoryID{US-001} & As a customer, I want to submit a service request so that the responsible team can act on it. Acceptance: valid data produces a unique request identifier on every supported client. & \gls{must} & \RequirementRef{REQ-F-001}, \RequirementRef{REQ-C-001}\\
+\UserStoryID{US-002} & As a customer, I want to view my request status so that I understand its progress. Acceptance: the current status and most recent update appear within the specified response time, and the transition history is retained. & \gls{should} & \RequirementRef{REQ-F-002}, \RequirementRef{REQ-Q-001}, \RequirementRef{REQ-D-001}, \RequirementRef{REQ-C-001}\\
+\UserStoryID{US-003} & As an operations analyst, I want to export request history so that I can perform approved analysis. Acceptance: an authorized actor prepares complete history within five minutes in the approved versioned format without changing source records. & \gls{would} & \RequirementRef{REQ-B-001}, \RequirementRef{REQ-F-003}, \RequirementRef{REQ-I-001}, \RequirementRef{REQ-S-001}, \RequirementRef{REQ-D-001}, \RequirementRef{REQ-C-001}\\
+\end{tabularx}
+
+\section{Review Rules}
+Confirm that every story identifies a beneficiary, outcome, acceptance
+criterion, priority, and at least one linked requirement. Maintain reciprocal
+story links in the traceability register.

@@ -1,0 +1,66 @@
+\chapter{System Context}
+\ChapterLabel{SystemContext}
+\section{How to Use This Chapter}
+Define the problem, stakeholders, system boundary, external actors and systems, assumptions, dependencies, and exclusions. Add a context diagram when it clarifies interactions.
+\section{System Purpose}
+\label{Section:SystemPurpose}
+\ProjectName\ controls the opening and closing of a curtain. The current
+decision is that a user commands the curtain through both a physical
+controller and a phone application.
+
+\section{Stakeholders}
+\label{Section:Stakeholders}
+\index{stakeholder}
+The stakeholders are people who want a low-cost \gls{iot} curtain closer that
+does not invade their privacy. Stel Angelidis is the authorized approver (see
+\hyperref[Section:DevelopmentPlanRoles]{approval authority}).
+
+\section{Stakeholder Constraints}
+\label{Section:StakeholderConstraints}
+\index{privacy}
+\index{cost limit}
+\index{microcontroller}
+The following constraints were stated by the authorized approver on
+October 14, 2026. They are inputs to the Requirements chapter and are not yet
+formal requirements.
+
+\begin{itemize}
+\item \textbf{Privacy:} the system collects no data about individual
+people, and it includes no cameras or microphones.
+\item \textbf{Cost:} the components cost no more than USD~20.
+\item \textbf{Platform:} the system runs on a microcontroller. All other
+platform characteristics are TBD.
+\end{itemize}
+
+\section{Open Context Items}
+\label{Section:OpenContextItems}
+The following context is TBD and shall be resolved from project evidence and
+authorized decisions before requirements are developed:
+
+\begin{itemize}
+\item the specific users, operators, installers, and maintainers, and any
+stakeholder groups beyond those identified in
+Section~\ref{Section:Stakeholders};
+\item the basis of the USD~20 component-cost limit, including whether it
+applies to the total of all components, which items count (for example the
+motor, power supply, enclosure, and mounting hardware), the purchase quantity,
+and the pricing date;
+\item whether any non-personal operational data, such as curtain position or
+schedules, may be stored or transmitted, and whether any cloud or
+third-party service is acceptable;
+\item the physical-controller and phone-application interfaces, including
+how the phone application communicates with the system;
+\item the system boundary, including the curtain mechanism, any actuator,
+sensors, or power source, and any external network, phone, or cloud service;
+\item the specific microcontroller, whether it runs bare-metal firmware or
+an RTOS, the board, and hardware revisions (see
+\ChapterRef{EmbeddedSystemsProfile});
+\item the physical installation environment, constraints, and assumptions;
+and
+\item a context diagram, once the boundary and external actors are known.
+\end{itemize}
+
+\textit{Template pattern: [User role] needs to [achieve outcome] because
+[current problem]. The system manages [owned capability]; [external system]
+remains outside the boundary and provides [interface]. Record its owner, data
+exchanged, and failure assumptions.}

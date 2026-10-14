@@ -1,0 +1,62 @@
+\chapter*{Document History}
+\addcontentsline{toc}{chapter}{Document History}
+\index{document history}
+\section*{How to Use This Chapter}
+Add the newest approved change at the top of the table. Retain every approved
+entry so that the document's evolution and review history remain auditable.
+Every history entry shall link to the chapter, section, table, figure, or
+controlled artifact where the documented change occurred.
+
+\noindent\textbf{Author initials:} \textbf{SAA}: Stel Angelidis;
+\textbf{CLAUDE}: Anthropic Claude Code; \textbf{DDM}: David Darian Muresan;
+\textbf{CDX}: OpenAI Codex. A comma identifies joint authorship or implementation.
+
+\noindent Entries from the template baseline through version 2.7 record the
+evolution of the master architecture template from which \ProjectName\ was
+initialized. Project history begins at version 0.1.
+
+\begin{tabularx}{\linewidth}{L{3.1cm}L{2.2cm}YL{2.0cm}}
+\caption{Document Update History\label{Table:DocumentHistory}}\\
+\toprule
+\textbf{Date / Version} & \textbf{Author Initials} & \textbf{Change} & \textbf{Changed At}\\
+\midrule
+\endfirsthead
+\multicolumn{4}{l}{\small\itshape Document Update History (continued)}\\
+\toprule
+\textbf{Date / Version} & \textbf{Author Initials} & \textbf{Change} & \textbf{Changed At}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+October 14, 2026 / 0.1 & SAA, CLAUDE & Initialized \ProjectName\ from template version 2.7: applied the \texttt{tgm} file namespace to all project-owned files and TikZ sources; set project name, owner, organization, version, status, and date; recorded the Embedded Systems profile as Applicable on a microcontroller platform; recorded Stel Angelidis as authorized approver; recorded the system purpose, the decision to provide both a physical controller and a phone application, the stakeholders, the privacy, USD 20 component-cost, and microcontroller constraints, and open context items; added the IoT acronym; added a Claude Code repository bootstrap and the initialization prompt record. & \ChapterRef{Introduction}, \hyperref[Section:DevelopmentPlanRoles]{approval authority}, \hyperref[Section:DevelopmentPlanProfiles]{profile decisions}, \hyperref[Section:SystemPurpose]{system purpose}, \hyperref[Section:Stakeholders]{stakeholders}, \hyperref[Section:StakeholderConstraints]{constraints}, \ChapterRef{AIPromptLog}\\
+September 18, 2026 / 2.7 & DDM, CDX & Required every applicable domain-profile concern to map to a new or existing project requirement, or to an authorized Not Applicable decision; added AI task routing and requirements-work instructions for this translation. & \hyperref[Section:DomainProfileRequirements]{Profile requirement rule}, \ChapterRef{AIAgentGuide}, \ChapterRef{EmbeddedSystemsProfile}\\
+September 18, 2026 / 2.6 & DDM, CDX & Added the domain-tailoring framework and Embedded Systems Tailoring Profile; added profile selection to initialization and the Development Plan; and extended AI routing, workflows, prompts, and completion checks for applicable profiles. & \hyperref[Section:DomainProfiles]{Domain profiles}, \ChapterRef{EmbeddedSystemsProfile}, \hyperref[Section:DevelopmentPlanProfiles]{profile decisions}, \ChapterRef{AIAgentGuide}\\
+September 9, 2026 / 2.5 & DDM, CDX & Required the project-initialization prompt to confirm the repository's AI tools before selecting bootstrap files and to create \texttt{SKILL.md} only for a confirmed reusable AI skill. & \hyperref[Section:InitializeNewProject]{Project initialization}\\
+September 9, 2026 / 2.4 & DDM, CDX & Added an explicit copy-and-paste AI request to the project-initialization section, including namespace confirmation, evidence review, gap analysis, human review, controlled bootstrap creation, and build verification. & \hyperref[Section:InitializeNewProject]{Project initialization}\\
+September 9, 2026 / 2.3 & DDM, CDX & Made TikZ the exclusive diagram source format; removed Graphviz generation from both platform build files and removed current fallback, installation, build, troubleshooting, and AI guidance for Graphviz. & \hyperref[Section:TikZAuthoring]{TikZ authoring}, \ChapterRef{DocumentGuide}, \ChapterRef{AIAgentGuide}\\
+September 9, 2026 / 2.2 & DDM, CDX & Added a concise Introduction workflow for instantiating a project-specific architecture book from the master template, including namespace confirmation, evidence review, dependency-ordered development, AI bootstrap guidance, and build verification. & \hyperref[Section:InitializeNewProject]{Project initialization}, \ChapterRef{AIAgentGuide}\\
+September 9, 2026 / 2.1 & DDM, CDX & Added the repository AI bootstrap procedure, applicable discovery-file catalog, non-duplication rule, reusable creation prompt, tool-mandated filename exception, and completion check. & \hyperref[Section:AIRepositoryBootstrap]{AI bootstrap}, \hyperref[Table:DocumentAuthoringRequirements]{authoring requirements}, \hyperref[Section:AIExamplePrompts]{example prompts}, \hyperref[Table:AICompletionChecklist]{completion checklist}\\
+September 8, 2026 / 2.0 & DDM, CDX & Required a human-confirmed project namespace for every new project-owned file; required each TikZ directory to exactly match its including LaTeX file; and renamed both active TikZ sources to comply. & \hyperref[Table:DocumentAuthoringRequirements]{authoring requirements}, \hyperref[Section:TikZAuthoring]{TikZ authoring}, \ChapterRef{AIAgentGuide}, \hyperref[Figure:VModel]{V-model}, \hyperref[Figure:UseCaseDiagram]{use-case diagram}\\
+September 7, 2026 / 1.9 & DDM, CDX & Linked each use-case identifier in the high-level TikZ diagram directly to its authoritative use-case definition. & \hyperref[Figure:UseCaseDiagram]{use-case diagram}\\
+September 7, 2026 / 1.8 & DDM, CDX & Replaced the active V-model and high-level use-case Graphviz figures with chapter-owned TikZ sources and updated both chapters to include and reference the vector diagrams directly. & \hyperref[Figure:VModel]{V-model}, \hyperref[Figure:UseCaseDiagram]{use-case diagram}\\
+September 7, 2026 / 1.7 & DDM, CDX & Established TikZ as the primary diagram-authoring tool, retained Graphviz as a fallback, documented the source and inclusion pattern, and added the mandatory AI rule for locating and referencing every TikZ source. & \ChapterRef{DocumentGuide}, \ChapterRef{AIAgentGuide}\\
+September 6, 2026 / 1.6 & DDM, CDX & Added the requirement identifier grammar, active family-code definitions, optional project scope, stable sequence rule, classification boundary, and the controlled AI procedure for proposing and approving a new scope or family without changing existing IDs. & \hyperref[Table:RequirementIdentifierConvention]{ID convention}, \ChapterRef{AIAgentGuide}\\
+August 25, 2026 / 1.5 & DDM, CDX & Expanded every formal table to the available portrait or landscape width using flexible multipage columns; retained the existing column hierarchy while increasing space for descriptive content. & \hyperref[Table:DocumentHistory]{History}, \ChapterRef{Requirements}, \ChapterRef{UserStories}, \ChapterRef{Tests}, \ChapterRef{Traceability}, \ChapterRef{Verification}, \ChapterRef{Validation}, \ChapterRef{AIAgentGuide}\\
+August 25, 2026 / 1.4 & DDM, CDX & Added a dedicated AI Agent Usage Guide with efficient task routing, in-document context packs, workflows, checklists, human-review boundaries, and reusable prompts; added a concise AI entry point in the Introduction; and consolidated duplicated guidance. & \ChapterRef{AIAgentGuide}, \ChapterRef{Introduction}, \ChapterRef{DocumentGuide}\\
+August 25, 2026 / 1.3 & DDM, CDX & Reorganized the requirement catalog into explicit families and subtypes; classified scalability, reliability, security, and related characteristics as quality attributes; and clarified the role of specialized working registers. & \hyperref[Table:RequirementCategoryCatalog]{Catalog}, \ChapterRef{Requirements}\\
+August 25, 2026 / 1.2 & DDM, CDX & Added the Open, In Progress, Done, and Retired requirement lifecycle; defined its relationship to priority and implementation version; and added Status to every requirement register. & \hyperref[Table:RequirementStatusDefinitions]{Status}, \ChapterRef{Requirements}\\
+August 25, 2026 / 1.1 & DDM, CDX & Split requirements into category-specific registers; added business requirements, a broad category catalog, functional-versus-quality guidance, and instructions for project-specific categories; and completed reciprocal mappings. & \hyperref[Table:BusinessRequirements]{B}, \hyperref[Table:FunctionalRequirements]{F}, \hyperref[Table:QualityRequirements]{Q}, \hyperref[Table:InterfaceRequirements]{I}, \hyperref[Table:SecurityRequirements]{S}, \hyperref[Table:DataRequirements]{D}, \hyperref[Table:ConstraintRequirements]{C}, \hyperref[Table:RequirementCategoryCatalog]{Catalog}\\
+August 25, 2026 / 1.0 & DDM, CDX & Added explicit generic interface, security, data, and constraint requirement examples with reciprocal story, use-case, test, traceability, and verification mappings. & \ChapterRef{Requirements}, \hyperref[Table:UserStories]{US}, \hyperref[Chapter:UseCases]{UC}, \hyperref[Chapter:Tests]{TC}, \hyperref[Table:TraceabilityMatrix]{RTM}, \hyperref[Table:VerificationRegister]{VER}\\
+August 25, 2026 / 0.9 & DDM, CDX & Removed all end-input boundaries and obsolete trailing project content; retained only generic template material; and added an AI-assisted architecture workflow with human-review and prompt-log guidance. & \ChapterRef{Introduction}, \hyperref[Section:AIArchitectureWorkflow]{AI workflow}, \ChapterRef{AIPromptLog}\\
+August 25, 2026 / 0.8 & DDM, CDX & Changed the joint-author separator from a slash to a comma. & \hyperref[Table:DocumentHistory]{History}\\
+August 25, 2026 / 0.7 & DDM, CDX & Replaced template-originator initials with named author initials and documented Codex joint authorship and implementation. & \hyperref[Table:DocumentHistory]{History}\\
+August 25, 2026 / 0.6 & DDM, CDX & Added visible template attribution, author contact information, AI-agent development credit, PDF creator metadata, source-header provenance, and authoring-guide provenance guidance. & \hyperref[Chapter:TemplateAttribution]{Template attribution}, \ChapterRef{DocumentGuide}\\
+August 25, 2026 / 0.5 & DDM, CDX & Replaced the literal x in the requirements implementation-version field with the empty-set symbol to identify requirements with no assigned implementation version. & \ChapterRef{Requirements}\\
+August 25, 2026 / 0.4 & DDM, CDX & Expanded the generic introduction with the central lesson, source-of-truth guidance, and V-model; added a generic high-level use-case diagram; and expanded the authoring and tool-installation appendix. & \ChapterRef{Introduction}, \hyperref[Figure:VModel]{V-model}, \ChapterRef{UseCases}, \hyperref[Figure:UseCaseDiagram]{Use-case diagram}, \ChapterRef{DocumentGuide}\\
+August 25, 2026 / 0.3 & DDM, CDX & Added linked history records; glossary-linked priority terms; user-story, traceability, verification, and validation registers; implementation-version status; and a final index chapter. & \hyperref[Table:DocumentHistory]{History}, \ChapterRef{Introduction}, \ChapterRef{Requirements}, \hyperref[Table:TraceabilityMatrix]{Traceability}, \hyperref[Table:VerificationRegister]{Verification}, \hyperref[Table:ValidationRegister]{Validation}, \hyperref[Chapter:Index]{Index}\\
+August 24, 2026 / 0.2 & DDM, CDX & Added longtable history and requirements registers, priority and implemented-version fields, reciprocal use-case mappings, and test-case mappings. & \hyperref[Table:DocumentHistory]{History}, \ChapterRef{Requirements}, \ChapterRef{UseCases}, \ChapterRef{Tests}\\
+\textit{[baseline date / 0.1]} & DDM & Generic software architecture design template baseline. & \ChapterRef{Introduction}\\
+\end{tabularx}

@@ -1,0 +1,43 @@
+\chapter{Traceability}
+\ChapterLabel{Traceability}
+\index{traceability}
+\index{requirements traceability matrix}
+\section{How to Use This Chapter}
+Maintain the canonical mapping from stakeholder need or approved constraint through requirement, design decision, implementation, test, verification, validation, and release evidence. Review both missing backward links and missing forward links.
+\section{Traceability Register}
+Requirement and use-case chapters shall contain reciprocal mappings. An
+unlinked requirement may be gold-plating; an untested requirement or unmapped
+use case is incomplete.
+
+\begin{landscape}
+\small
+\begin{tabularx}{\linewidth}{YYYYYY}
+\caption{Traceability Register\label{Table:TraceabilityMatrix}}\\
+\toprule
+\textbf{User Story} & \textbf{Requirement} & \textbf{Use Case} & \textbf{Test Case} & \textbf{Verification} & \textbf{Validation}\\
+\midrule
+\endfirsthead
+\multicolumn{6}{l}{\small\itshape Traceability Register (continued)}\\
+\toprule
+\textbf{User Story} & \textbf{Requirement} & \textbf{Use Case} & \textbf{Test Case} & \textbf{Verification} & \textbf{Validation}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\UserStoryRef{US-001} & \RequirementRef{REQ-F-001} & \UseCaseRef{UC-001} & \TestCaseRef{TC-001} & \VerificationRef{VER-001} & \ValidationRef{VAL-001}\\
+\UserStoryRef{US-002} & \RequirementRef{REQ-F-002} & \UseCaseRef{UC-002} & \TestCaseRef{TC-002} & \VerificationRef{VER-002} & \ValidationRef{VAL-002}\\
+\UserStoryRef{US-002} & \RequirementRef{REQ-Q-001} & \UseCaseRef{UC-002} & \TestCaseRef{TC-003} & \VerificationRef{VER-003} & \ValidationRef{VAL-002}\\
+\UserStoryRef{US-003} & \RequirementRef{REQ-F-003} & \UseCaseRef{UC-003} & \TestCaseRef{TC-004} & \VerificationRef{VER-004} & \ValidationRef{VAL-003}\\
+\UserStoryRef{US-003} & \RequirementRef{REQ-I-001} & \UseCaseRef{UC-003} & \TestCaseRef{TC-005} & \VerificationRef{VER-005} & \ValidationRef{VAL-003}\\
+\UserStoryRef{US-003} & \RequirementRef{REQ-S-001} & \UseCaseRef{UC-003} & \TestCaseRef{TC-006} & \VerificationRef{VER-006} & \ValidationRef{VAL-003}\\
+\UserStoryRef{US-002} & \RequirementRef{REQ-D-001} & \UseCaseRef{UC-002} & \TestCaseRef{TC-007} & \VerificationRef{VER-007} & \ValidationRef{VAL-002}\\
+\UserStoryRef{US-003} & \RequirementRef{REQ-D-001} & \UseCaseRef{UC-003} & \TestCaseRef{TC-007} & \VerificationRef{VER-007} & \ValidationRef{VAL-003}\\
+\UserStoryRef{US-001} & \RequirementRef{REQ-C-001} & \UseCaseRef{UC-001} & \TestCaseRef{TC-008} & \VerificationRef{VER-008} & \ValidationRef{VAL-001}\\
+\UserStoryRef{US-002} & \RequirementRef{REQ-C-001} & \UseCaseRef{UC-002} & \TestCaseRef{TC-008} & \VerificationRef{VER-008} & \ValidationRef{VAL-002}\\
+\UserStoryRef{US-003} & \RequirementRef{REQ-C-001} & \UseCaseRef{UC-003} & \TestCaseRef{TC-008} & \VerificationRef{VER-008} & \ValidationRef{VAL-003}\\
+\UserStoryRef{US-003} & \RequirementRef{REQ-B-001} & \UseCaseRef{UC-003} & \TestCaseRef{TC-009} & \VerificationRef{VER-009} & \ValidationRef{VAL-003}\\
+\end{tabularx}
+\end{landscape}

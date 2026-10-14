@@ -1,0 +1,23 @@
+# LaTeX build outputs for tgmManual.tex
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.idx
+*.ind
+*.ilg
+*.bbl
+*.blg
+*.glo
+*.gls
+*.glg
+*.acn
+*.acr
+*.alg
+*.ist
+*.xdy
+*.fls
+*.fdb_latexmk
+*.synctex.gz

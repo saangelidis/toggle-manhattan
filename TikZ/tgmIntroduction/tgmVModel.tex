@@ -1,0 +1,58 @@
+\begin{tikzpicture}[
+  stage/.style={
+    draw=dsnBlue,
+    fill=dsnLightBlue,
+    rounded corners=2pt,
+    minimum width=2.7cm,
+    minimum height=0.82cm,
+    align=center,
+    font=\small
+  },
+  test stage/.style={
+    stage,
+    draw=dsnGreen,
+    fill=dsnGreen!10
+  },
+  implementation/.style={
+    stage,
+    draw=dsnGray,
+    fill=dsnGray!10
+  },
+  lifecycle/.style={
+    -{Latex[length=2.2mm]},
+    line width=0.7pt
+  },
+  relationship/.style={
+    draw=dsnGray,
+    dashed,
+    line width=0.6pt
+  },
+  relationship label/.style={
+    fill=white,
+    inner sep=1.5pt,
+    font=\scriptsize\itshape,
+    text=dsnGray
+  }
+]
+  \node[stage] (needs) at (-5.6,5.0) {Stakeholder Needs};
+  \node[stage, minimum width=3.2cm] (requirements) at (-4.35,3.75) {System and Software\\Requirements};
+  \node[stage] (architecture) at (-3.1,2.5) {Architecture};
+  \node[stage] (design) at (-2.2,1.25) {Detailed Design};
+  \node[implementation] (implementation) at (0,0) {Implementation};
+
+  \node[test stage] (unit) at (2.2,1.25) {Unit Tests};
+  \node[test stage] (integration) at (3.1,2.5) {Integration Tests};
+  \node[test stage, minimum width=3.0cm] (verification) at (4.35,3.75) {System Verification};
+  \node[test stage, minimum width=2.9cm] (validation) at (5.6,5.0) {Stakeholder Validation};
+
+  \draw[lifecycle, draw=dsnBlue]
+    (needs) -- (requirements) -- (architecture) -- (design) -- (implementation);
+  \draw[lifecycle, draw=dsnGreen]
+    (implementation) -- (unit) -- (integration) -- (verification) -- (validation);
+
+  \draw[relationship] (needs) -- node[relationship label, above=1pt] {acceptance} (validation);
+  \draw[relationship] (requirements) -- node[relationship label, above=1pt] {compliance} (verification);
+  \draw[relationship] (architecture) -- node[relationship label, above=1pt] {integration} (integration);
+  \draw[relationship] (design) -- node[relationship label, above=1pt] {correctness} (unit);
+
+\end{tikzpicture}

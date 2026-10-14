@@ -1,0 +1,398 @@
+\chapter{Document Authoring Guide}
+\ChapterLabel{DocumentGuide}
+\index{LaTeX}
+\index{TikZ}
+\index{document conventions}
+\index{build tools}
+\index{AI agent!LaTeX installation prompt}
+\index{Appendix!Document Authoring Guide}
+
+\section{How to Use This Appendix}
+Use this appendix to maintain authoring conventions, repository locations,
+diagram sources, review rules, tool installation, and PDF build instructions.
+Update it whenever the document structure or toolchain changes.
+
+\section{Template Provenance}
+\index{template provenance}
+This template was developed by \textbf{Darian Muresan, Ph.D.}, in conjunction
+with the AI agents \textbf{OpenAI Codex} and
+\textbf{Anthropic Claude Code}. Questions, corrections, and proposed
+improvements may be sent to
+\href{mailto:dmuresan@stevens.edu}{dmuresan@stevens.edu},
+\href{mailto:darian@dmmd.net}{darian@dmmd.net}, or
+\href{mailto:darian@pictomic.com}{darian@pictomic.com}.
+
+Keep the template attribution distinct from the project-specific document
+owner and organization. A derived project may replace the project metadata
+while retaining this provenance statement for the underlying template.
+
+\section{AI-Assisted Authoring}
+\index{AI agent!architecture workflow}
+The authoritative instructions for AI-assisted architecture work, including
+task routing, limited context loading, workflows, example prompts, completion
+checks, and human-review boundaries, are contained in
+\ChapterRef{AIAgentGuide}. This appendix retains installation, build, file, and
+LaTeX authoring guidance that applies to both human authors and AI agents.
+
+\section{File Naming}
+
+Every project-owned file created for this document shall begin with the project
+file namespace, followed by a Pascal-style responsibility name. The namespace
+is defined once in \texttt{tgmManual.tex}. The defining macro is
+\texttt{FileNamespace}, and this template sets it to
+\texttt{\FileNamespace}. Example chapter files include
+\texttt{tgmRequirements.tex}, \texttt{tgmTests.tex}, and
+\texttt{tgmValidation.tex}. The convention applies to chapter files, diagram
+sources, generated project figures, evidence files, and other project-owned
+artifacts. A tool-mandated or externally maintained file name may remain an
+explicitly documented exception, but shall not establish a second project
+naming convention.
+
+Before creating or renaming files for a derived project, an AI agent shall ask
+an authorized human for the project file namespace or confirm a namespace that
+is already explicitly configured. The agent shall not invent one. After it is
+confirmed, replace \verb|\FileNamespace| and apply the namespace consistently
+to every new project-owned file.
+
+\subsection{Document-Authoring Requirements}
+The following requirements govern the template itself and every project derived
+from it. They are verified by repository inspection and by compiling the
+document.
+
+\small
+\begin{tabularx}{\linewidth}{L{2.5cm}Y L{3.0cm}}
+\caption{Document-Authoring Requirements\label{Table:DocumentAuthoringRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Verification}\\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\small\itshape Document-Authoring Requirements (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Verification}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+DOC-FILE-001 & Except for an explicitly documented tool-mandated discovery
+file, every new project-owned file shall be named
+\texttt{\textless nameSpace\textgreater\textless FileName\textgreater.\textless extension\textgreater},
+using the human-approved project namespace and a descriptive Pascal-style file
+name. & Inspect all newly created project files.\\
+DOC-TIKZ-001 & Every TikZ source shall be stored under
+\texttt{TikZ/\textless includingFileBaseName\textgreater/} and shall be named
+\texttt{\textless nameSpace\textgreater\textless DrawingName\textgreater.tex}.
+The directory name shall exactly match the base name of the LaTeX file that
+contains its \texttt{input} command. & Compare each TikZ path with its including
+LaTeX file and compile the document.\\
+DOC-AI-001 & Before creating or renaming any project-owned file, an AI agent
+shall ask for or confirm the project \texttt{\textless nameSpace\textgreater}
+and shall apply the confirmed namespace to all files it creates. & Review the
+AI interaction record and inspect created file names.\\
+DOC-AI-002 & Every repository-level AI instruction file shall point to
+\texttt{tgmAIAgentGuide.tex} and the relevant authoritative LaTeX sources,
+shall instruct the agent to read them before architecture-related work, and
+shall not duplicate their rules. Tool-mandated discovery file names are
+documented exceptions to DOC-FILE-001. & Inspect each repository AI instruction
+file and compare it with the authoritative LaTeX guidance.\\
+\end{tabularx}
+\normalsize
+
+\section{One Responsibility per Chapter}
+
+A chapter answers one major engineering question. When content belongs
+to another responsibility, link to its authoritative chapter instead of
+copying it. In particular, tests define procedures, verification records
+requirement compliance, validation evaluates stakeholder use, and release
+decides whether the evidence is sufficient.
+
+\section{Adding a Chapter}
+
+Create the namespaced file, begin it with a chapter title and stable chapter
+label, add useful index terms, and include it once from
+\texttt{tgmManual.tex}. Add or change artifact mappings only in the canonical
+traceability matrix.
+
+\begin{verbatim}
+\chapter{Example Chapter}
+\ChapterLabel{ExampleChapter}
+\index{example}
+\index{Chapter!Example Chapter}
+
+Chapter content goes here.
+\end{verbatim}
+
+\section{Diagram Authoring with TikZ}
+\label{Section:TikZAuthoring}
+\index{diagram!TikZ source}
+
+TikZ is the diagram-authoring tool for this template. Authors shall use TikZ
+for architecture diagrams because the editable source
+remains in LaTeX, text uses the document fonts, output stays vector based, and
+diagram changes can be reviewed with the surrounding specification. The main
+document loads TikZ and a common set of libraries for arrows, positioning,
+geometric shapes, fitting, and coordinate calculations.
+
+Every TikZ source shall use the following directory hierarchy:
+\begin{center}
+\texttt{TikZ/\textless includingFileBaseName\textgreater/\textless nameSpace\textgreater\textless DrawingName\textgreater.tex}
+\end{center}
+The directory name shall exactly match the base name of the LaTeX file that
+contains the diagram's \verb|\input| command. The TikZ file name shall begin
+with the configured project namespace and describe the drawing. For example,
+the Introduction chapter includes its V-model from:
+\begin{center}
+\path|TikZ/tgmIntroduction/tgmVModel.tex|
+\end{center}
+Create additional including-file directories as required; do not place TikZ
+sources beside chapter files or in generated-image directories.
+
+The TikZ source file should contain the \texttt{tikzpicture} environment. The
+owning chapter shall include that source in a numbered figure, provide a
+descriptive caption, place a stable label after the caption, and reference the
+figure from the chapter text:
+
+\begin{verbatim}
+As shown in Figure~\ref{Figure:HighLevelUseCase}, ...
+
+\begin{figure}[htbp]
+  \centering
+  \input{TikZ/tgmUseCases/tgmUseCaseDiagram.tex}
+  \caption{High-level use-case diagram.}
+  \label{Figure:HighLevelUseCase}
+\end{figure}
+\end{verbatim}
+
+\section{Building the PDF}
+
+TikZ diagrams compile directly when their source files are included by the
+owning chapters. The toolchain requires:
+
+\begin{itemize}
+  \item a LaTeX distribution containing TikZ/PGF, \texttt{pdflatex},
+  \texttt{bibtex}, and \texttt{latexmk};
+  \item the \texttt{makeglossaries} and \texttt{makeindex} commands.
+\end{itemize}
+
+\subsection{Installing the Tools on macOS}
+
+The full MacTeX distribution is recommended because it includes the LaTeX tools and packages used by this template. Complete these steps from an administrator account:
+
+\begin{enumerate}
+  \item Open Terminal and install Apple's command-line tools, which provide \texttt{make}:
+\begin{verbatim}
+xcode-select --install
+\end{verbatim}
+  Complete the installer dialog before continuing.
+
+  \item Install Homebrew by following the current instructions at \url{https://brew.sh/}. Then install MacTeX, which includes TikZ:
+\begin{verbatim}
+brew install --cask mactex
+\end{verbatim}
+  MacTeX may instead be downloaded directly from \url{https://tug.org/mactex/}.
+
+  \item Close and reopen Terminal so the MacTeX command-line tools are added to the system path.
+
+  \item Verify that every required command is available:
+\begin{verbatim}
+command -v make pdflatex bibtex \
+  makeglossaries makeindex latexmk
+kpsewhich tikz.sty
+\end{verbatim}
+  Each command shall print a path. A missing line identifies the tool or TikZ
+  package that still needs to be installed or added to the system path.
+\end{enumerate}
+
+\subsection{Installing the Tools on Windows}
+
+Use a current Windows 10 or Windows 11 computer and complete these steps:
+
+\begin{enumerate}
+  \item Download and run the Basic MiKTeX Installer from \url{https://miktex.org/howto/install-miktex}. Choose a private per-user installation when appropriate and select \emph{Always install missing packages on-the-fly} for a computer with Internet access.
+
+  \item Open MiKTeX Console, check for updates, and install them. If \texttt{latexmk} is not found during verification, use the Packages page in MiKTeX Console to install the \texttt{latexmk} package.
+
+  \item Close and reopen PowerShell, then verify the required commands:
+\begin{verbatim}
+Get-Command pdflatex,bibtex
+Get-Command makeglossaries,makeindex,latexmk
+kpsewhich tikz.sty
+\end{verbatim}
+  Each tool shall produce a command record. A command-not-found error identifies a missing installation or system-path entry.
+\end{enumerate}
+
+On an organization-managed computer, authors shall ask the system administrator
+before installing software or changing a managed execution policy.
+
+\subsection{Installing the Tools on Ubuntu or Debian Linux}
+
+Open a terminal and install TikZ/PGF, GNU Make, Latexmk, and a TeX
+Live set that contains the other packages used by this template:
+
+\begin{verbatim}
+sudo apt update
+sudo apt install make latexmk texlive-pictures \
+  texlive-latex-extra \
+  texlive-fonts-recommended texlive-bibtex-extra \
+  texlive-extra-utils
+\end{verbatim}
+
+Verify the required commands:
+
+\begin{verbatim}
+command -v make pdflatex bibtex \
+  makeglossaries makeindex latexmk
+kpsewhich tikz.sty
+\end{verbatim}
+
+For another Linux distribution, install the equivalent TikZ/PGF, GNU
+Make, Latexmk, and full or extended TeX Live packages with its package manager.
+
+\subsection{AI-Agent Installation}
+\label{Section:AIAgentInstallation}
+
+An AI coding agent can inspect the host, identify missing commands, request
+approval for system changes, install the appropriate packages, and verify the
+build. Give the agent the project directory and the following reusable request:
+
+\begin{verbatim}
+In this LaTeX project, inspect the build files and determine
+which operating system and package manager are available.
+Verify TikZ with `kpsewhich tikz.sty`, and verify make,
+pdflatex, bibtex, makeglossaries, makeindex, and latexmk.
+Install only missing tools using the
+platform's standard package manager. Ask for approval before
+administrator-level, system-wide, or networked installation.
+Do not replace project sources or remove user files. After
+installation, compile included TikZ sources, run the full platform
+build, inspect the log for errors, unresolved
+references, and overfull boxes, and report the generated PDF.
+\end{verbatim}
+
+If the agent cannot install software, ask it to report the exact missing
+command, the attempted verification, and platform-specific installation
+instructions. Never give an agent an unrestricted instruction to delete build
+directories or modify system security policy.
+
+\subsection{Building on macOS and Linux}
+
+From the template directory, run:
+
+\begin{verbatim}
+make -f makefileMacLinux pdf
+\end{verbatim}
+
+Use \texttt{make -f makefileMacLinux clean} to remove generated build files while preserving authored sources and the final PDF.
+
+\subsection{Building with Windows PowerShell}
+
+From PowerShell in the template directory, run:
+
+\begin{verbatim}
+.\makefilePowerShell.ps1 -Action pdf
+\end{verbatim}
+
+Use \texttt{-Action clean} in place of \texttt{-Action pdf} to remove generated build files. If local execution policy prevents scripts from running, use an approved organizational policy or allow scripts only for the current PowerShell process:
+
+\begin{verbatim}
+Set-ExecutionPolicy -Scope Process Bypass
+.\makefilePowerShell.ps1 -Action pdf
+\end{verbatim}
+
+\subsection{Manual Build Sequence}
+
+When the platform build script is unavailable, run the following commands from
+the template directory. The final two LaTeX passes resolve tables of contents,
+citations, glossary links, the index, and cross-references.
+
+Included TikZ sources require no separate rendering command; \texttt{pdflatex}
+compiles them with their owning chapters:
+
+\begin{verbatim}
+pdflatex -interaction=nonstopmode -halt-on-error tgmManual.tex
+bibtex tgmManual
+makeglossaries tgmManual
+makeindex tgmManual.idx
+pdflatex -interaction=nonstopmode -halt-on-error tgmManual.tex
+pdflatex -interaction=nonstopmode -halt-on-error tgmManual.tex
+\end{verbatim}
+
+\subsection{Build Verification and Troubleshooting}
+
+Confirm that the output PDF opens, all expected chapters and appendices appear,
+the glossary and index are populated, hyperlinks reach their targets, and no
+table or figure is clipped. Search \texttt{tgmManual.log} for fatal errors,
+undefined references, missing files, and overfull boxes. Common remedies are:
+
+\begin{itemize}
+\item open a new terminal after installation so its search path is refreshed;
+\item on macOS, verify that \texttt{/Library/TeX/texbin} is on the search path;
+\item rerun the complete build after adding citations, glossary entries, index
+entries, figures, labels, or references;
+\item compile and inspect the owning chapter after changing a TikZ source;
+\item install the named LaTeX package when the log reports a missing
+\texttt{.sty} file.
+\end{itemize}
+
+\section{Authoring Rules}
+
+\begin{itemize}
+\item Add the newest approved change to the top of the document history.
+\item Introduce specialized terms through the glossary and use them consistently.
+\item Give every controlled artifact a stable explicit ID.
+\item Use \texttt{shall} only for binding requirements.
+\item Keep normative requirements separate from explanation and examples.
+\item Apply the approved project namespace to every new project-owned file as
+specified in \hyperref[Table:DocumentAuthoringRequirements]{the
+document-authoring requirements}.
+\item Use TikZ for all diagrams. Store every source in
+\path|TikZ/<includingFileBaseName>/| and name it
+\path|<nameSpace><DrawingName>.tex|.
+\item Include each TikZ source from its owning chapter in a numbered figure
+with a caption and stable label, and reference that figure in the chapter text.
+\item Compile and inspect the PDF after structural or table changes.
+\end{itemize}
+
+\section{Citations and Bibliography}
+
+Store controlled reference records in \texttt{tgmReferences.bib}. Cite a
+source from a chapter with a stable BibTeX key:
+
+\begin{verbatim}
+\cite{ISO29148}
+\end{verbatim}
+
+The main file applies the style and prints one document-level bibliography:
+
+\begin{verbatim}
+\bibliographystyle{IEEEtran}
+\bibliography{tgmReferences}
+\end{verbatim}
+
+Both platform build scripts run BibTeX automatically.
+
+Bibliography entries support claims and definitions; they do not replace
+project-owned requirements, architecture decisions, test procedures, or
+approval evidence.
+
+\section{Selective Builds}
+
+For a large project, LaTeX's \verb|\includeonly| command may select chapters
+during drafting. The main file contains a commented example:
+
+\begin{verbatim}
+% \includeonly{
+%   prologue,
+%   tgmRequirements,
+%   tgmTests
+% }
+\end{verbatim}
+
+Remove the leading comment characters and list include names without the
+\texttt{.tex} extension. LaTeX can retain cross-references and citations from
+omitted chapters by reading their existing auxiliary files, but those files
+may be absent or stale. Selective builds are therefore drafting aids only.
+Hyperref may also report missing destinations for links into deliberately
+omitted chapters; these draft warnings shall disappear in the full build.
+Comment out the complete \verb|\includeonly| block and run a full build before
+verification or release so missing chapters, references, glossary entries,
+citations, and evidence cannot be hidden.

@@ -1,0 +1,422 @@
+\chapter{Requirements}
+\ChapterLabel{Requirements}
+\index{requirement}
+\index{requirement!implementation version}
+\index{priority}
+
+\section{How to Use This Chapter}
+State singular, necessary, unambiguous, feasible, and verifiable obligations.
+Every requirement shall have a stable ID, one priority, the version in which it
+was implemented, at least one mapped use case, and at least one mapped test case.
+Enter \NoVersion\ in \textbf{In Version} when no implementation version has
+been assigned. Preserve IDs when wording or version assignments change.
+
+Select the requirement categories that make the specification easier to review
+and govern. Keep each requirement in one primary register and use traceability
+links instead of copying the same requirement into multiple categories.
+
+\section{Requirement Identifier Naming Convention}
+\label{Section:RequirementIdentifierConvention}
+\index{requirement!identifier convention}
+\index{requirement!family code}
+\index{requirement!scope qualifier}
+
+Requirement identifiers use the following grammar:
+\begin{verbatim}
+REQ-[<scope>-]<family>-<sequence>
+\end{verbatim}
+The optional scope qualifier identifies a project-defined subsystem, product,
+content type, or other governed area. Omit it for project-wide requirements.
+The sequence is a three-digit, zero-padded number that is unique within the
+exact scope and family combination. For example, \texttt{REQ-F-004} is the
+fourth project-wide functional requirement, while
+\texttt{REQ-API-Q-003} is the third quality requirement in a project-defined
+\texttt{API} scope.
+
+\small
+\begin{tabularx}{\linewidth}{L{2.0cm}L{3.5cm}Y}
+\caption{Requirement Identifier Segments and Family Codes\label{Table:RequirementIdentifierConvention}}\\
+\toprule
+\textbf{Code} & \textbf{Meaning} & \textbf{Use}\\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\small\itshape Requirement Identifier Segments and Family Codes (continued)}\\
+\toprule
+\textbf{Code} & \textbf{Meaning} & \textbf{Use}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\texttt{REQ} & Requirement & Identifies the artifact as a requirement. Every requirement ID begins with this segment.\\
+\texttt{<scope>} & Project-defined scope & Optional uppercase qualifier for a governed subsystem, product, content type, or other area. Define every scope code before use; absence denotes project-wide scope.\\
+\texttt{B} & Business & States the stakeholder outcome, mission, commercial purpose, policy goal, or business result the system shall enable.\\
+\texttt{F} & Functional & States observable behavior, service, workflow, calculation, state change, or capability the system shall provide.\\
+\texttt{Q} & Quality & States a measurable quality attribute or non-functional expectation, including accessibility, performance, reliability, resilience, usability, maintainability, or compatibility.\\
+\texttt{I} & Interface & States a user, software, API, hardware, communication, protocol, or external-system boundary contract, including integration behavior at that boundary.\\
+\texttt{S} & Security & States security, privacy, consent, authorization, auditing, secret-handling, or protected-data obligations maintained in a specialized security register.\\
+\texttt{D} & Data & States data definition, authority, provenance, quality, integrity, ownership, lifecycle, retention, or source-of-truth obligations.\\
+\texttt{C} & Constraint & States a binding implementation, platform, technology, format, storage, source-control, standards, compatibility, schedule, budget, or governance constraint.\\
+\texttt{\#\#\#} & Sequence & Three-digit, zero-padded stable sequence within the exact scope and family; assigned monotonically and never reused.\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+Classify a requirement by its primary obligation and verification concern. A
+requirement may support several concerns, but its identifier contains only one
+family code. Represent cross-cutting relationships through traceability rather
+than a compound family code.
+
+An AI agent shall reuse an existing scope and family whenever their definitions
+fit. If no defined family accurately represents the requirement, the agent
+shall not silently invent or use a new code. It shall propose a unique uppercase
+code, full family name, decision boundary, rationale, and representative
+examples; check the complete requirements register and category catalog for
+semantic overlap and identifier collision; and obtain authorized-human
+approval. After approval, the agent shall add the family to
+Table~\ref{Table:RequirementIdentifierConvention}, update the category catalog
+and AI guidance, and create or update the applicable register before assigning
+an identifier from it. The same approval and documentation rule applies to a
+new scope qualifier. Extending the convention shall not rename, renumber, or
+reuse an existing identifier.
+
+\section{Functional and Quality Requirements}
+\index{requirement!functional}
+\index{requirement!quality}
+Functional and quality requirements answer different questions and shall not be
+used interchangeably.
+
+\begin{dsnNote}[Central Distinction]
+A \textbf{functional requirement} states what behavior, service, calculation,
+state transition, or externally observable result the system shall provide. A
+\textbf{quality requirement} states how well that behavior or the system as a
+whole shall perform under stated conditions. Quality requirements require a
+measurable threshold, workload, environment, or other evaluation basis.
+\end{dsnNote}
+
+For example, ``The system shall display the current request status'' is
+functional. ``The system shall display the current request status within two
+seconds under the reference workload'' is a quality requirement. Avoid vague
+quality statements such as ``the system shall be fast, secure, reliable, or
+easy to use.'' Replace them with measurable conditions and success criteria.
+
+Quality requirements are also called quality-attribute or non-functional
+requirements. The term \emph{quality requirement} is preferred here because
+these obligations describe behavior that shall be designed, implemented, and
+verified rather than an absence of function.
+
+\section{Requirement Status Model}
+\index{requirement!status}
+\index{status!Open}
+\index{status!In Progress}
+\index{status!Done}
+\index{status!Retired}
+Priority and status are independent. Priority records the requirement's
+importance or commitment; status records its progress through the delivery
+lifecycle. A status change shall not erase or replace the assigned priority.
+
+\begin{tabularx}{\linewidth}{L{3.0cm}YL{3.3cm}}
+\caption{Requirement Status Definitions\label{Table:RequirementStatusDefinitions}}\\
+\toprule
+\textbf{Status} & \textbf{Meaning} & \textbf{In Version Rule}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Status} & \textbf{Meaning} & \textbf{In Version Rule}\\
+\midrule
+\endhead
+\ReqStatusOpen & The requirement is active, but implementation has not started. Deferred work remains Open until work begins or the requirement is retired. & Enter \NoVersion.\\
+\ReqStatusInProgress & Implementation or integration work has started, but the requirement does not yet satisfy the definition of Done. & Enter \NoVersion.\\
+\ReqStatusDone & The requirement is implemented; mapped tests pass; verification is complete; traceability is current; and the completed behavior is included in a controlled version. & Enter the first controlled version containing the completed requirement.\\
+\ReqStatusRetired & The requirement is no longer active because it was superseded, made obsolete, rejected, or withdrawn. Retain its stable ID, original text, and traceability; record the rationale and any replacement in document history. & Retain the original implementation version if it was previously Done; otherwise enter \NoVersion.\\
+\bottomrule
+\end{tabularx}
+
+Only \ReqStatusDone\ asserts completion. Do not remove a retired requirement or
+reuse its ID. A requirement may move from \ReqStatusRetired\ only through an
+approved change that restores its active status and records the decision in
+document history.
+
+\section{Requirement Category Catalog}
+\index{requirement!category catalog}
+The following catalog distinguishes broad requirement families from their
+subtypes. In particular, performance, capacity, scalability, reliability,
+availability, resilience, recoverability, usability, accessibility,
+maintainability, supportability, testability, portability, compatibility,
+interoperability, security, privacy, safety, sustainability, and observability
+are quality attributes. A requirement concerning one of these attributes is a
+quality requirement when it specifies how well the system shall operate under
+stated conditions.
+
+A project may organize a specialized quality attribute, such as security,
+privacy, or safety, in a separate register when it has distinct owners, review
+criteria, evidence, or assurance obligations. The separate register is a
+management view; it does not change the requirement's classification as a
+quality requirement. Likewise, interface, data, operational, and other families
+may contain both functional obligations and associated quality obligations. Use
+the primary purpose of each requirement to select its register and use links to
+represent cross-cutting concerns.
+
+The catalog is intentionally broad. A project may use a family as a top-level
+register, create registers for selected subtypes, combine closely related
+groups, or omit groups that do not apply. Category choice shall not weaken the
+traceability or verification rules for individual requirements.
+
+\section{Domain Profile Impact on Requirements}
+\label{Section:DomainProfileRequirements}
+\index{requirement!domain profile}
+Every Applicable domain profile shall be evaluated when developing or changing
+requirements. Each applicable profile concern shall result in one or more
+project requirements, a reference to an existing requirement, or a documented
+Not Applicable decision with rationale approved by an authorized human. Record
+the profile applicability decision in the Development Plan and retain
+project-specific obligations only in the applicable requirement registers.
+The profile itself is a tailoring guide, not a duplicate requirements
+specification. See Section~\ref{Section:DomainProfiles} and the applicable
+profile appendix.
+
+\small
+\begin{tabularx}{\linewidth}{L{3.0cm}L{4.0cm}Y}
+\caption{Requirement Families, Subtypes, and Quality Attributes\label{Table:RequirementCategoryCatalog}}\\
+\toprule
+\textbf{Requirement Family} & \textbf{Subtype or Quality Attribute} & \textbf{Typical Scope}\\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\small\itshape Requirement Families, Subtypes, and Quality Attributes (continued)}\\
+\toprule
+\textbf{Requirement Family} & \textbf{Subtype or Quality Attribute} & \textbf{Typical Scope}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+Business & Outcomes and policy & Organizational outcomes, value, policy goals, measurable benefits, cost targets, and mission objectives.\\
+Stakeholder and user & Stakeholder need & Capabilities, outcomes, and constraints needed by a stakeholder group or external party.\\
+Stakeholder and user & User need & User goals and externally visible outcomes expressed independently of a particular implementation.\\
+Functional & System behavior & Services, calculations, decisions, state changes, workflows, and observable system responses.\\
+Quality & General quality & Measurable characteristics that state how well a function or the system shall operate under stated conditions.\\
+Quality & Performance & Response time, latency, throughput, processing time, and resource consumption.\\
+Quality & Capacity & Supported data volume, transaction volume, concurrent users, devices, or retained records.\\
+Quality & Scalability & Behavior as workload, data, users, or deployed instances increase or decrease.\\
+Quality & Reliability & Probability or frequency of failure-free operation under stated conditions.\\
+Quality & Availability & Required service availability, planned downtime, and permitted outage duration.\\
+Quality & Resilience and fault tolerance & Continued or degraded operation when components, dependencies, or communication paths fail.\\
+Quality & Recoverability and continuity & Recovery time, recovery point, restoration, backup, failover, and disaster-continuity objectives.\\
+Quality & Usability & Task effectiveness, efficiency, learnability, error prevention, and user satisfaction.\\
+Quality & Accessibility & Conformance and measurable support for users with visual, auditory, motor, speech, or cognitive disabilities.\\
+Quality & Maintainability & Time, effort, modularity, analyzability, and change characteristics required for system modification.\\
+Quality & Supportability & Diagnostic access, service procedures, field replacement, support hours, and support-team capabilities.\\
+Quality & Testability & Controllability, observability, repeatability, test interfaces, and evidence needed to verify behavior.\\
+Quality & Portability & Ability to install, move, or operate the system across specified environments or platforms.\\
+Quality & Compatibility & Coexistence and correct operation with specified versions, devices, browsers, operating systems, or products.\\
+Quality & Interoperability & Coordinated behavior, protocols, semantics, orchestration, and exchanges with external systems.\\
+Quality & Security & Authentication, authorization, confidentiality, integrity, cryptography, auditing, and threat resistance.\\
+Quality & Privacy & Collection, consent, purpose, minimization, access, disclosure, retention, deletion, and rights for personal data.\\
+Quality & Safety & Hazard prevention, risk reduction, safe state, interlocks, alarms, and unacceptable-loss controls.\\
+Quality & Sustainability & Energy use, resource efficiency, carbon reporting, hardware life, repair, reuse, and disposal objectives.\\
+Quality & Observability & Logs, metrics, traces, health signals, diagnostic context, and measurable diagnostic coverage.\\
+Interface & User interface & Human-system interaction, presentation, navigation, input, feedback, and interaction contracts.\\
+Interface & Software and API & Operations, messages, schemas, errors, protocols, sequencing, and software boundary contracts.\\
+Interface & Hardware and communication & Connectors, signals, electrical characteristics, device protocols, networks, and physical boundaries.\\
+Data and information & Data definition and quality & Data definitions, schemas, provenance, accuracy, completeness, integrity, ownership, and permitted transformations.\\
+Data and information & Lifecycle and governance & Creation, access, retention, archival, legal hold, disposition, deletion, and proof of destruction.\\
+Operational & Operation and administration & Startup, shutdown, scheduling, configuration, provisioning, monitoring, backup, recovery, and incident response.\\
+Operational & Deployment and platform & Approved platforms, topology, packaging, installation, configuration, upgrade, and runtime environment.\\
+Operational & Infrastructure and environment & Network, compute, storage, facility, power, temperature, physical location, and environmental limits.\\
+Transition & Migration and rollout & Data conversion, coexistence, rollout, cutover, rollback, legacy integration, and decommissioning.\\
+Compliance and legal & Regulatory and standards & Obligations imposed by regulations, standards, certifications, policies, or assurance frameworks.\\
+Compliance and legal & Legal and contractual & Licenses, warranties, intellectual-property terms, service agreements, procurement terms, and contractual duties.\\
+Compliance and legal & Reporting and audit & Reports, evidence, audit trails, review access, content, timing, and record accountability.\\
+Product support & Documentation & Required user, operator, administrator, developer, API, maintenance, and compliance documentation.\\
+Product support & Training & Required curricula, exercises, qualifications, delivery modes, and demonstrated learner outcomes.\\
+Commercial & Licensing and entitlement & Product editions, entitlement, metering, third-party components, subscriptions, and licensing restrictions.\\
+AI and machine learning & Model and data controls & Model performance, data provenance, bias evaluation, explainability, human oversight, drift, and retraining controls.\\
+Physical and hardware & Physical characteristics & Dimensions, mass, materials, connectors, tolerances, environmental ratings, and hardware behavior.\\
+Constraint & Solution constraint & Mandated technologies, designs, budgets, schedules, standards, dependencies, or solution boundaries.\\
+\end{tabularx}
+\normalsize
+
+\section{Creating a Project-Specific Category}
+Create an additional category when it gives requirements a distinct meaning,
+owner, review method, or assurance process. Define the category's scope and a
+unique family code using
+Section~\ref{Section:RequirementIdentifierConvention}; duplicate one of the
+category-specific registers below; keep the standard columns; add the category to
+\hyperref[Table:RequirementCategoryCatalog]{the category catalog}; and update
+use cases, tests, traceability, verification, validation, document history, and
+the index as applicable. Document whether the new category is top-level or a
+subtype of an existing category.
+
+Do not create a category solely to avoid resolving an ambiguous requirement.
+If one statement contains multiple independently verifiable obligations, split
+it into singular requirements and assign each one a primary category.
+
+\section{Review Rules}
+Reject a requirement row if its priority, status, use-case mapping, or test-case
+mapping is empty. The \textbf{Status} field shall contain Open, In Progress,
+Done, or Retired. The \textbf{In Version} field shall follow
+\hyperref[Table:RequirementStatusDefinitions]{the status definitions}. Confirm
+that reciprocal mappings appear in the user-story, use-case, test,
+traceability, and verification registers.
+
+\begin{landscape}
+\small
+\section{Category-Specific Requirement Registers}
+The seven registers below are the template's default working set. They are
+selected for practical review and ownership, not as seven mutually exclusive
+top-level families. For example, the Security Requirements Register is a
+specialized quality-requirement register. Add, rename, combine, or remove
+registers to match the approved project taxonomy. Every retained register shall
+use the same traceability columns.
+
+\subsection{Business Requirements}
+\index{requirement!business}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Business Requirements Register\label{Table:BusinessRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Business Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-B-001} & The system shall enable an authorized analyst to prepare approved request-history data for analysis within five minutes for the reference data set. & \gls{must} & \ReqStatusOpen & \NoVersion & \UseCaseRef{UC-003} & \TestCaseRef{TC-009}\\
+\end{tabularx}
+
+\clearpage
+\subsection{Functional Requirements}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Functional Requirements Register\label{Table:FunctionalRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Functional Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-F-001} & The system shall accept a valid service request and assign it a unique identifier. & \gls{must} & \ReqStatusDone & 1.0 & \UseCaseRef{UC-001} & \TestCaseRef{TC-001}\\
+\RequirementID{REQ-F-002} & The system shall display the current status and most recent update for a submitted request. & \gls{should} & \ReqStatusDone & 1.1 & \UseCaseRef{UC-002} & \TestCaseRef{TC-002}\\
+\RequirementID{REQ-F-003} & The system shall export request history in the approved interchange format. & \gls{would} & \ReqStatusOpen & \NoVersion & \UseCaseRef{UC-003} & \TestCaseRef{TC-004}\\
+\end{tabularx}
+
+\subsection{Quality Requirements}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Quality Requirements Register\label{Table:QualityRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Quality Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-Q-001} & The system shall display a request status within two seconds under the reference workload. & \gls{could} & \ReqStatusDone & 1.2 & \UseCaseRef{UC-002} & \TestCaseRef{TC-003}\\
+\end{tabularx}
+
+\clearpage
+\subsection{Interface Requirements}
+\index{requirement!interface}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Interface Requirements Register\label{Table:InterfaceRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Interface Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-I-001} & The system shall exchange request-history exports using the approved, versioned interface schema. & \gls{should} & \ReqStatusInProgress & \NoVersion & \UseCaseRef{UC-003} & \TestCaseRef{TC-005}\\
+\end{tabularx}
+
+\subsection{Security Requirements}
+\index{requirement!security}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Security Requirements Register\label{Table:SecurityRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Security Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-S-001} & The system shall permit request-history exports only to authenticated actors assigned the approved export role. & \gls{must} & \ReqStatusDone & 1.0 & \UseCaseRef{UC-003} & \TestCaseRef{TC-006}\\
+\end{tabularx}
+
+\clearpage
+\subsection{Data Requirements}
+\index{requirement!data}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Data Requirements Register\label{Table:DataRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Data Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-D-001} & The system shall retain each request status transition with its timestamp, actor identifier, previous status, and new status. & \gls{must} & \ReqStatusDone & 1.1 & \UseCaseRef{UC-002}, \UseCaseRef{UC-003} & \TestCaseRef{TC-007}\\
+\end{tabularx}
+
+\subsection{Constraint Requirements}
+\index{requirement!constraint}
+\begin{tabularx}{\linewidth}{L{2.1cm}YL{2.0cm}L{2.1cm}L{1.5cm}L{2.6cm}L{2.6cm}}
+\caption{Constraint Requirements Register\label{Table:ConstraintRequirements}}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endfirsthead
+\multicolumn{7}{l}{\small\itshape Constraint Requirements Register (continued)}\\
+\toprule
+\textbf{ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Status} & \textbf{In Version} & \textbf{Use Case(s)} & \textbf{Test Case(s)}\\
+\midrule
+\endhead
+\midrule
+\multicolumn{7}{r}{\small\itshape Continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\RequirementID{REQ-C-001} & The system shall support the deployment platform and browser versions identified in the approved deployment baseline. & \gls{must} & \ReqStatusDone & 1.0 & \UseCaseRef{UC-001}, \UseCaseRef{UC-002}, \UseCaseRef{UC-003} & \TestCaseRef{TC-008}\\
+\end{tabularx}
+\end{landscape}

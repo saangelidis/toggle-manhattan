@@ -1,0 +1,67 @@
+\chapter{Use Cases}
+\ChapterLabel{UseCases}
+\section{How to Use This Chapter}
+Describe goal-oriented interactions at the system boundary. Give every use case
+a stable ID, its own table, and at least one reciprocal requirement mapping.
+Include preconditions, trigger, main flow, alternate or exception flows, and
+postconditions. Maintain the canonical relationships among stories,
+requirements, use cases, and tests in \ChapterRef{Traceability}.
+
+\section[High-Level Use Case Diagram]{\hspace{0.5em}High-Level Use Case Diagram}
+Show the system boundary, primary actors, and major user goals before the
+detailed use-case tables. Replace the generic example with project-specific
+actors and use cases while preserving the stable use-case identifiers.
+Figure~\ref{Figure:UseCaseDiagram} provides the template example.
+
+\begin{figure}[htbp]
+\centering
+\input{TikZ/tgmUseCases/tgmUseCaseDiagram.tex}
+\caption{Generic high-level use case diagram.}
+\label{Figure:UseCaseDiagram}
+\end{figure}
+\index{use case diagram}
+
+\section{Submit a Service Request}
+\begin{tabularx}{\linewidth}{L{3.5cm}Y}
+\toprule
+\textbf{Identifier} & \UseCaseID{UC-001}\\
+\textbf{Mapped requirements} & \RequirementRef{REQ-F-001}, \RequirementRef{REQ-C-001}\\
+\textbf{Goal} & Submit a valid request and receive a unique identifier.\\
+\textbf{Primary actor} & Customer\\
+\textbf{Preconditions} & The customer can access the request form.\\
+\textbf{Trigger} & The customer chooses to submit a new request.\\
+\textbf{Main flow} & The customer enters required data and submits it; the system validates the data, creates the request, and displays its identifier.\\
+\textbf{Alternate flow} & If required data is invalid, the system identifies the affected fields and creates no request.\\
+\textbf{Postconditions} & A valid request exists with a unique identifier and an initial status.\\
+\bottomrule
+\end{tabularx}
+
+\section{View Request Status}
+\begin{tabularx}{\linewidth}{L{3.5cm}Y}
+\toprule
+\textbf{Identifier} & \UseCaseID{UC-002}\\
+\textbf{Mapped requirements} & \RequirementRef{REQ-F-002}, \RequirementRef{REQ-Q-001}, \RequirementRef{REQ-D-001}, \RequirementRef{REQ-C-001}\\
+\textbf{Goal} & Review the current state of a submitted request.\\
+\textbf{Primary actor} & Customer\\
+\textbf{Preconditions} & A request with a known identifier exists.\\
+\textbf{Trigger} & The customer opens or refreshes the request status.\\
+\textbf{Main flow} & The system retrieves and displays the request status and most recent update.\\
+\textbf{Alternate flow} & If the identifier is unknown, the system reports that no matching request was found.\\
+\textbf{Postconditions} & The request remains unchanged; its current status has been presented.\\
+\bottomrule
+\end{tabularx}
+
+\section{Export Request History}
+\begin{tabularx}{\linewidth}{L{3.5cm}Y}
+\toprule
+\textbf{Identifier} & \UseCaseID{UC-003}\\
+\textbf{Mapped requirements} & \RequirementRef{REQ-B-001}, \RequirementRef{REQ-F-003}, \RequirementRef{REQ-I-001}, \RequirementRef{REQ-S-001}, \RequirementRef{REQ-D-001}, \RequirementRef{REQ-C-001}\\
+\textbf{Goal} & Export request history for authorized analysis.\\
+\textbf{Primary actor} & Operations analyst\\
+\textbf{Preconditions} & The actor is authorized and matching requests exist.\\
+\textbf{Trigger} & The actor selects an export range and format.\\
+\textbf{Main flow} & The system validates authorization, generates the export, and makes the result available to the actor.\\
+\textbf{Alternate flow} & If no records match, the system produces an empty result with an explanatory status.\\
+\textbf{Postconditions} & An export artifact exists; source request records are unchanged.\\
+\bottomrule
+\end{tabularx}

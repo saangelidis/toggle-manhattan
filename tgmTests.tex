@@ -1,0 +1,26 @@
+\chapter{Tests}
+\ChapterLabel{Tests}
+\section{How to Use This Chapter}
+Define repeatable test cases, levels, environments, data, entry conditions, procedures, expected results, and result recording. Tests produce evidence; they do not replace verification or validation.
+\section{Example Test Cases}
+\begin{tabularx}{\linewidth}{L{2.1cm}L{3.0cm}YL{5.0cm}}
+\caption{Test Case Examples\label{Table:TestCaseExamples}}\\
+\toprule
+\textbf{ID} & \textbf{Mapped Requirement} & \textbf{Procedure} & \textbf{Expected Result}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Mapped Requirement} & \textbf{Procedure} & \textbf{Expected Result}\\
+\midrule
+\endhead
+\TestCaseID{TC-001} & \RequirementRef{REQ-F-001} & Submit a request containing valid required data. & The system creates one request and displays a unique identifier.\\
+\TestCaseID{TC-002} & \RequirementRef{REQ-F-002} & Open the status for a known request. & The current status and most recent update are displayed.\\
+\TestCaseID{TC-003} & \RequirementRef{REQ-Q-001} & Measure 20 status requests under the reference workload. & Every measured response is displayed within two seconds.\\
+\TestCaseID{TC-004} & \RequirementRef{REQ-F-003} & Export a known request set in the approved format. & The export contains the expected history without changing source records.\\
+\TestCaseID{TC-005} & \RequirementRef{REQ-I-001} & Export representative request history and validate the result against the approved interface schema version. & The export conforms to the approved schema and declares the expected schema version.\\
+\TestCaseID{TC-006} & \RequirementRef{REQ-S-001} & Attempt the same export as an authorized actor, an authenticated actor without the export role, and an unauthenticated actor. & Only the authorized actor receives an export; both unauthorized attempts are denied and recorded.\\
+\TestCaseID{TC-007} & \RequirementRef{REQ-D-001} & Perform two status transitions and inspect the stored history and exported record. & Each transition retains the expected timestamp, actor identifier, previous status, and new status.\\
+\TestCaseID{TC-008} & \RequirementRef{REQ-C-001} & Execute the critical use-case test suite on every platform and browser version in the approved deployment baseline. & Every critical use case passes on every approved platform and browser version.\\
+\TestCaseID{TC-009} & \RequirementRef{REQ-B-001} & Time an authorized analyst preparing an approved export from the reference data set without manual reconstruction. & The analyst obtains analysis-ready request-history data within five minutes.\\
+\bottomrule
+\end{tabularx}

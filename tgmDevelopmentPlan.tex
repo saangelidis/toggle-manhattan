@@ -1,0 +1,47 @@
+\chapter{Development Plan}
+\ChapterLabel{DevelopmentPlan}
+\section{How to Use This Chapter}
+Describe governance, roles, milestones, change control, and risks. Adapt the plan to the lifecycle the team will actually follow.
+
+\section{Roles and Approval Authority}
+\label{Section:DevelopmentPlanRoles}
+Stel Angelidis is the document owner and the authorized approver for
+\ProjectName. Other project roles are TBD.
+
+\section{Domain Profile Selection}
+\label{Section:DevelopmentPlanProfiles}
+Record every domain tailoring profile considered during initialization. An
+authorized human shall set each profile to Applicable, Not Applicable, or TBD
+and record the rationale, decision owner, and date. A TBD profile remains in
+the AI and human review context until resolved. When a profile is Applicable,
+identify the lifecycle gates, roles, evidence, and reviews it adds to this
+development plan.
+
+\small
+\begin{tabularx}{\linewidth}{L{3.5cm}L{2.7cm}Y}
+\caption{Project Domain Profile Decisions\label{Table:ProjectDomainProfiles}}\\
+\toprule
+\textbf{Profile} & \textbf{Status} & \textbf{Rationale, Owner, and Date}\\
+\midrule
+\endfirsthead
+\multicolumn{3}{l}{\small\itshape Project Domain Profile Decisions (continued)}\\
+\toprule
+\textbf{Profile} & \textbf{Status} & \textbf{Rationale, Owner, and Date}\\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+\hyperref[Chapter:EmbeddedSystemsProfile]{Embedded Systems} &
+Applicable &
+The system controls the physical opening and closing of a curtain.
+Platform: microcontroller; bare metal or RTOS is TBD. Specific
+microcontroller, board, and hardware revisions: TBD. Approved by Stel
+Angelidis on October 14, 2026.\\
+\textit{[Additional profile]} &
+\textit{[Applicable / Not Applicable / TBD]} &
+\textit{[Decision basis, authorized owner, and decision date]}\\
+\end{tabularx}
+\normalsize
+
+\section{Example}
+The product owner prioritizes outcomes; the architect owns significant design decisions; developers implement approved work; and the test lead retains evidence. Typical gates are needs reviewed, requirements baselined, architecture approved, evidence complete, and release approved. Example risk: an external service may be unavailable; define the failure response and test it before release.
